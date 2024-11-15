@@ -1,0 +1,1 @@
+name=Чипсы;brand=Lays;price=100.0;calories=1000;productType=FOOD
