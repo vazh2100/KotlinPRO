@@ -72,7 +72,6 @@ object WorkersDataManager {
 //        _workers.find { it is Assistant }
         for (worker in _workers) {
             if (worker is Assistant) return worker
-            break
         }
         return null
     }
@@ -81,7 +80,6 @@ object WorkersDataManager {
 //        _workers.find { it is Director }
         for (worker in _workers) {
             if (worker is Director) return worker
-            break
         }
         return null
     }
