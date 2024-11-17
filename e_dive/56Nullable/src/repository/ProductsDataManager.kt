@@ -1,5 +1,6 @@
-package entities
+package repository
 
+import entities.ProductCard
 import java.io.File
 
 object ProductsDataManager {

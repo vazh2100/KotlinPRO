@@ -1,5 +1,8 @@
-package entities
+package repository
 
+import entities.Assistant
+import entities.Director
+import entities.Worker
 import java.io.File
 
 
@@ -63,6 +66,24 @@ object WorkersDataManager {
                 break
             }
         }
+    }
+
+    fun findAssistant(): Assistant? {
+//        _workers.find { it is Assistant }
+        for (worker in _workers) {
+            if (worker is Assistant) return worker
+            break
+        }
+        return null
+    }
+
+    fun findDirector(): Director? {
+//        _workers.find { it is Director }
+        for (worker in _workers) {
+            if (worker is Director) return worker
+            break
+        }
+        return null
     }
 
     private fun loadWorkers(): MutableSet<Worker> {
