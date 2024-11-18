@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7aa97856-81fb-4c62-9e5f-edb047418640" name="Changes" comment="" />
+    <list default="true" id="7aa97856-81fb-4c62-9e5f-edb047418640" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product_cards.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profiles.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/entities/Gender.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/entities/Person.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/entities/PersonDataManager.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/entities/ProductCard.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/entities/ProductCategory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/entities/entities/ProductCardDataManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,7 +50,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Kotlin Object" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin Enum" />
       </list>
     </option>
   </component>
@@ -69,6 +83,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Build 60KotlinSerialization.executor": "Run",
+    "Gradle.Build 61KotlinSerialization2.executor": "Run",
     "Kotlin.MainKt.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -78,9 +93,18 @@
     "onboarding.tips.debug.path": "/home/vazh2100/StudioProjects/IDEA/KotlinPRO/f_functional/60KotlinSerialization/src/main/kotlin/Main.kt",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Kotlin"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="entities" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.vazh2100.MainKt" />
@@ -128,13 +152,13 @@
       <option name="project" value="LOCAL" />
       <updated>1731939759897</updated>
     </task>
-    <task id="LOCAL-00004" summary="60KotlinSerialization after">
+    <task id="LOCAL-00004" summary="61KotlinSerialization2 before">
       <option name="closed" value="true" />
-      <created>1731939849445</created>
+      <created>1731939981670</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1731939849445</updated>
+      <updated>1731939981670</updated>
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
@@ -142,7 +166,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="60KotlinSerialization before" />
     <MESSAGE value="60KotlinSerialization after" />
-    <option name="LAST_COMMIT_MESSAGE" value="60KotlinSerialization after" />
+    <MESSAGE value="61KotlinSerialization2 before" />
+    <option name="LAST_COMMIT_MESSAGE" value="61KotlinSerialization2 before" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
