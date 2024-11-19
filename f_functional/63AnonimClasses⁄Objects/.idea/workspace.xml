@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7aa97856-81fb-4c62-9e5f-edb047418640" name="Changes" comment="" />
+    <list default="true" id="7aa97856-81fb-4c62-9e5f-edb047418640" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/entities/Filter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/entities/ProductCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/entities/ProductCard.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/entities/entities/ProductCardDataManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/entities/ProductCardDataManager.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,6 +47,7 @@
         <option value="Kotlin Object" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Enum" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
@@ -72,12 +79,13 @@
   "keyToString": {
     "Gradle.Build 60KotlinSerialization.executor": "Run",
     "Gradle.Build 61KotlinSerialization2.executor": "Run",
+    "Gradle.Build 63AnonimClasses⁄Objects.executor": "Run",
     "Kotlin.MainKt.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/vazh2100/StudioProjects/IDEA/KotlinPRO/f_functional/62CleanFunctions",
+    "last_opened_file_path": "/home/vazh2100/StudioProjects/IDEA/KotlinPRO/f_functional/63AnonimClasses⁄Objects",
     "onboarding.tips.debug.path": "/home/vazh2100/StudioProjects/IDEA/KotlinPRO/f_functional/60KotlinSerialization/src/main/kotlin/Main.kt",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
@@ -91,6 +99,9 @@
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="entities" />
+    </key>
+    <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="com.vazh2100.entities" />
     </key>
   </component>
   <component name="RunManager">
@@ -164,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732007875778</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="63AnonymousClasses before">
+      <option name="closed" value="true" />
+      <created>1732008000986</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1732008000986</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -174,9 +193,22 @@
     <MESSAGE value="61KotlinSerialization2 after" />
     <MESSAGE value="62CleanFunctions before" />
     <MESSAGE value="62CleanFunctions after" />
-    <option name="LAST_COMMIT_MESSAGE" value="62CleanFunctions after" />
+    <MESSAGE value="63AnonymousClasses before" />
+    <option name="LAST_COMMIT_MESSAGE" value="63AnonymousClasses before" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-field">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/entities/ProductCard.kt</url>
+          <line>8</line>
+          <properties myFieldName="productDescription" myClassName="com.vazh2100.entities.ProductCard" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
