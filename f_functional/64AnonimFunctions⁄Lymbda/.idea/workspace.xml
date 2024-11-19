@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7aa97856-81fb-4c62-9e5f-edb047418640" name="Changes" comment="" />
+    <list default="true" id="7aa97856-81fb-4c62-9e5f-edb047418640" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,12 +77,13 @@
     "Gradle.Build 60KotlinSerialization.executor": "Run",
     "Gradle.Build 61KotlinSerialization2.executor": "Run",
     "Gradle.Build 63AnonimClasses⁄Objects.executor": "Run",
+    "Gradle.Build 64AnonimFunctions⁄Lymbda.executor": "Run",
     "Kotlin.MainKt.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/vazh2100/StudioProjects/IDEA/KotlinPRO/f_functional/63AnonimClasses⁄Objects",
+    "last_opened_file_path": "/home/vazh2100/StudioProjects/IDEA/KotlinPRO/f_functional/64AnonimFunctions⁄Lymbda",
     "onboarding.tips.debug.path": "/home/vazh2100/StudioProjects/IDEA/KotlinPRO/f_functional/60KotlinSerialization/src/main/kotlin/Main.kt",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
@@ -185,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732013174163</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="64AnonymousFunctionsLymbdas before">
+      <option name="closed" value="true" />
+      <created>1732013323160</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1732013323160</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -197,7 +209,8 @@
     <MESSAGE value="62CleanFunctions after" />
     <MESSAGE value="63AnonymousClasses before" />
     <MESSAGE value="63AnonymousClasses after" />
-    <option name="LAST_COMMIT_MESSAGE" value="63AnonymousClasses after" />
+    <MESSAGE value="64AnonymousFunctionsLymbdas before" />
+    <option name="LAST_COMMIT_MESSAGE" value="64AnonymousFunctionsLymbdas before" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
