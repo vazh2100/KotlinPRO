@@ -40,5 +40,35 @@ class UserRepository private constructor() {
         }
     }
 
+// способ через late init
+//    companion object {
+//        private lateinit var _instance: UserRepository
+//        val LOCK = Any()
+//        fun instance(): UserRepository {
+//            synchronized(LOCK) {
+//                if (!::_instance.isInitialized) _instance = UserRepository()
+//                return _instance
+//            }
+//        }
+//    }
+
+    // Способ сразу создать объект
+//    companion object {
+//        private  val  _instance: UserRepository = UserRepository()
+//        val LOCK = Any()
+//        fun instance(): UserRepository {
+//            synchronized(LOCK) {
+//                return _instance
+//            }
+//        }
+//    }
+// через ленивую инициализацию
+//    companion object {
+//        val LOCK = Any()
+//         val instance: UserRepository by lazy(LOCK) {
+//            UserRepository()
+//        }
+//    }
+
 
 }
