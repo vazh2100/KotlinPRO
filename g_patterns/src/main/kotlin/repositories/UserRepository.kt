@@ -33,11 +33,15 @@ class UserRepository private constructor() {
         private var _instance: UserRepository? = null
         val LOCK = Any()
         fun instance(): UserRepository {
+            _instance?.also { return it }
             synchronized(LOCK) {
-                if (_instance == null) _instance = UserRepository()
-                return _instance!!
+                _instance?.also { return it }
+                return UserRepository().also {
+                    _instance = it
+                }
             }
         }
+
     }
 
 // способ через late init
