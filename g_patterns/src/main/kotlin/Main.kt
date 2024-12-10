@@ -1,33 +1,7 @@
-import entities.Counter
-import repositories.UserRepository
-import kotlin.concurrent.thread
+import ui.Display
 
 fun main() {
-    val counter = Counter()
-
-    val a = thread {
-        repeat(100_000) {
-            counter.increment()
-        }
-    }
-
-    val b = thread {
-        repeat(100_000) {
-            counter.increment()
-        }
-    }
-
-    a.join()
-    b.join()
-    println(counter.i)
-
-
-    return
-    thread { UserRepository.instance() }
-    thread { UserRepository.instance() }
-    thread { UserRepository.instance() }
-    thread { UserRepository.instance() }
-    thread { UserRepository.instance() }
+    Display().show()
 
 }
 
