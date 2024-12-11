@@ -1,7 +1,10 @@
+import entities.Administrator
 import ui.Display
 
 fun main() {
     Display().show()
+    Display().show()
+    Administrator().work()
 
 }
 

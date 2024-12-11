@@ -1,30 +1,9 @@
 [
   {
-    "id": 1,
-    "first_name": "Ilario",
-    "last_name": "Skrine",
-    "age": 67,
-    "gender": "Male",
-    "email": "iskrine0@engadget.com",
-    "address": "8 Kingsford Center",
-    "phone_number": "794-394-7573"
-  },
-  {
-    "id": 2,
-    "first_name": "Van",
-    "last_name": "O'Codihie",
-    "age": 22,
-    "gender": "Male",
-    "email": "vocodihie1@vk.com",
-    "address": "86 Lighthouse Bay Court",
-    "phone_number": "212-898-6616"
-  },
-  {
     "id": 3,
     "first_name": "Samantha",
     "last_name": "Leacock",
     "age": 78,
-    "gender": "Female",
     "email": "sleacock2@ihg.com",
     "address": "2 Fallview Junction",
     "phone_number": "111-909-7792"
@@ -34,7 +13,6 @@
     "first_name": "Ada",
     "last_name": "Jobb",
     "age": 78,
-    "gender": "Female",
     "email": "ajobb3@jiathis.com",
     "address": "056 Merrick Road",
     "phone_number": "446-309-5378"
@@ -44,7 +22,6 @@
     "first_name": "Andeee",
     "last_name": "Pauluzzi",
     "age": 39,
-    "gender": "Female",
     "email": "apauluzzi4@about.com",
     "address": "3 David Terrace",
     "phone_number": "965-159-9217"
@@ -54,7 +31,6 @@
     "first_name": "Magnum",
     "last_name": "Forlonge",
     "age": 72,
-    "gender": "Male",
     "email": "mforlonge5@bizjournals.com",
     "address": "693 Basil Junction",
     "phone_number": "710-761-2731"
@@ -64,7 +40,6 @@
     "first_name": "Dale",
     "last_name": "Bohlens",
     "age": 49,
-    "gender": "Male",
     "email": "dbohlens6@sina.com.cn",
     "address": "46 Myrtle Drive",
     "phone_number": "457-109-8754"
@@ -74,7 +49,6 @@
     "first_name": "Donnie",
     "last_name": "Wenderoth",
     "age": 50,
-    "gender": "Female",
     "email": "dwenderoth7@aol.com",
     "address": "10 South Court",
     "phone_number": "248-519-9640"
@@ -84,19 +58,26 @@
     "first_name": "Kenneth",
     "last_name": "Borit",
     "age": 20,
-    "gender": "Male",
     "email": "kborit8@ebay.co.uk",
     "address": "389 New Castle Hill",
     "phone_number": "470-341-6273"
   },
   {
-    "id": 10,
-    "first_name": "Teodoro",
-    "last_name": "Kerner",
-    "age": 44,
-    "gender": "Male",
-    "email": "tkerner9@twitter.com",
-    "address": "550 Rigney Crossing",
-    "phone_number": "811-337-7348"
+    "id": 11,
+    "first_name": "Андрей",
+    "last_name": "Важенин",
+    "age": 30,
+    "email": "",
+    "address": "",
+    "phone_number": ""
+  },
+  {
+    "id": 12,
+    "first_name": "Петух",
+    "last_name": "Обосанный",
+    "age": 35,
+    "email": "",
+    "address": "",
+    "phone_number": ""
   }
 ]

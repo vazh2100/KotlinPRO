@@ -1,5 +1,6 @@
 package ui
 
+import entities.User
 import repositories.UserRepository
 import java.awt.Dimension
 import java.awt.Font
@@ -9,12 +10,14 @@ import javax.swing.JScrollPane
 import javax.swing.JTextArea
 
 class Display {
+
+    private val textArea: JTextArea = JTextArea().apply {
+        isEditable = false
+        font = Font(Font.SERIF, Font.BOLD, 23)
+        margin = Insets(16, 16, 16, 16)
+    }
+
     fun show() {
-        val textArea = JTextArea().apply {
-            isEditable = false
-            font = Font(Font.SERIF, Font.BOLD, 23)
-            margin = Insets(16, 16, 16, 16)
-        }
         val scrollPane = JScrollPane(textArea)
         JFrame().apply {
             isVisible = true
@@ -22,6 +25,12 @@ class Display {
             isResizable = true
             add(scrollPane)
         }
-        textArea.text = UserRepository.instance().users.joinToString("\n")
+        UserRepository
+            .instance()
+            .addObserver(this)
+    }
+
+    fun onChanged(users: List<User>) {
+        textArea.text = users.joinToString("\n")
     }
 }
