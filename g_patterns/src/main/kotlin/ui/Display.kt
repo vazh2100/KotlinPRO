@@ -1,5 +1,6 @@
 package ui
 
+import entities.Observer
 import entities.User
 import repositories.UserRepository
 import java.awt.Dimension
@@ -25,12 +26,14 @@ class Display {
             isResizable = true
             add(scrollPane)
         }
+        //Зависимость от абстракций, а не от реализаций
         UserRepository
             .instance()
-            .addObserver(this)
+            .addObserver(object : Observer<List<User>> {
+                override fun onChanged(newValue: List<User>) {
+                    textArea.text = newValue.joinToString("\n")
+                }
+            })
     }
 
-    fun onChanged(users: List<User>) {
-        textArea.text = users.joinToString("\n")
-    }
 }

@@ -1,9 +1,9 @@
 package repositories
 
+import entities.Observer
 import entities.User
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import ui.Display
 import java.io.File
 
 val json = Json { ignoreUnknownKeys = true }
@@ -32,10 +32,11 @@ class UserRepository private constructor() {
     private val _users: MutableList<User> = loadUsers()
     val users get() = _users.toList()
 
-    private val observers: MutableList<Display> = mutableListOf()
-    fun addObserver(display: Display) {
-        observers.add(display)
-        display.onChanged(_users)
+    //Зависимость от абстракций, а не от реализаций
+    private val observers: MutableList<Observer<List<User>>> = mutableListOf()
+    fun addObserver(observer: Observer<List<User>>) {
+        observers.add(observer)
+        observer.onChanged(_users)
     }
 
     //3 Initialization block: used for complex initialization
