@@ -1,7 +1,5 @@
 package ui
 
-import entities.Observer
-import entities.User
 import repositories.UserRepository
 import java.awt.Dimension
 import java.awt.Font
@@ -29,11 +27,7 @@ class Display {
         //Зависимость от абстракций, а не от реализаций
         UserRepository
             .instance()
-            .addObserver(object : Observer<List<User>> {
-                override fun onChanged(newValue: List<User>) {
-                    textArea.text = newValue.joinToString("\n")
-                }
-            })
+            .addOnUserChangeListener { newValue -> textArea.text = newValue.joinToString("\n") }
     }
 
 }

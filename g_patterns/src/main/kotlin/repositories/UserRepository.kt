@@ -13,7 +13,7 @@ class UserRepository private constructor() {
     // 1. Companion object: constants and static-like members
     companion object {
         private var _instance: UserRepository? = null
-        val LOCK = Any()
+        private val LOCK = Any()
         fun instance(): UserRepository {
             _instance?.also { return it }
             synchronized(LOCK) {
@@ -34,7 +34,7 @@ class UserRepository private constructor() {
 
     //Зависимость от абстракций, а не от реализаций
     private val observers: MutableList<Observer<List<User>>> = mutableListOf()
-    fun addObserver(observer: Observer<List<User>>) {
+    fun addOnUserChangeListener(observer: Observer<List<User>>) {
         observers.add(observer)
         observer.onChanged(_users)
     }
