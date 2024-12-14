@@ -1,32 +1,5 @@
 [
   {
-    "id": 3,
-    "first_name": "Samantha",
-    "last_name": "Leacock",
-    "age": 78,
-    "email": "sleacock2@ihg.com",
-    "address": "2 Fallview Junction",
-    "phone_number": "111-909-7792"
-  },
-  {
-    "id": 4,
-    "first_name": "Ada",
-    "last_name": "Jobb",
-    "age": 78,
-    "email": "ajobb3@jiathis.com",
-    "address": "056 Merrick Road",
-    "phone_number": "446-309-5378"
-  },
-  {
-    "id": 5,
-    "first_name": "Andeee",
-    "last_name": "Pauluzzi",
-    "age": 39,
-    "email": "apauluzzi4@about.com",
-    "address": "3 David Terrace",
-    "phone_number": "965-159-9217"
-  },
-  {
     "id": 6,
     "first_name": "Magnum",
     "last_name": "Forlonge",
@@ -76,6 +49,15 @@
     "first_name": "Петух",
     "last_name": "Обосанный",
     "age": 35,
+    "email": "",
+    "address": "",
+    "phone_number": ""
+  },
+  {
+    "id": 13,
+    "first_name": "Петух",
+    "last_name": "Обосанный 2",
+    "age": 10,
     "email": "",
     "address": "",
     "phone_number": ""

@@ -1,10 +1,10 @@
 package entities
 
-import repositories.UserRepository
+import repositories.UserRepositoryWithDelegate
 
 
 class Administrator {
-    private val userRepository = UserRepository.instance()
+    private val userRepository = UserRepositoryWithDelegate.instance()
 
     fun work() {
         val operationTypes = OperationType.entries

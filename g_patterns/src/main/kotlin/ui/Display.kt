@@ -1,6 +1,6 @@
 package ui
 
-import repositories.UserRepository
+import repositories.UserRepositoryWithDelegate
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.Insets
@@ -25,7 +25,7 @@ class Display {
             add(scrollPane)
         }
         //Зависимость от абстракций, а не от реализаций
-        UserRepository
+        UserRepositoryWithDelegate
             .instance()
             .addOnUserChangeListener { newValue -> textArea.text = newValue.joinToString("\n") }
     }
