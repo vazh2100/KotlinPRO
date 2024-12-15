@@ -8,7 +8,7 @@ import javax.swing.JFrame
 import javax.swing.JScrollPane
 import javax.swing.JTextArea
 
-class Display {
+class Display2 {
 
     private val textArea: JTextArea = JTextArea().apply {
         isEditable = false
@@ -25,8 +25,8 @@ class Display {
             add(scrollPane)
         }
         //Зависимость от абстракций, а не от реализаций
-        UserRepository.instance().users.addObserver { newValue ->
-            textArea.text = newValue.joinToString("\n")
+        UserRepository.instance().oldestUser.addObserver { newValue ->
+            textArea.text = newValue.toString()
         }
 
     }

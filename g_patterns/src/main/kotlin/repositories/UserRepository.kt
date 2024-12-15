@@ -1,7 +1,6 @@
 package repositories
 
-import entities.Observable
-import entities.Observer
+import entities.MutableObservable
 import entities.User
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -10,7 +9,7 @@ import java.io.File
 val json = Json { ignoreUnknownKeys = true }
 
 //чтобы запретить создавать любое количество объектов запрещаем использовать конструктор из вне
-class UserRepository private constructor() : Observable<List<User>> {
+class UserRepository private constructor() {
     // 1. Companion object: constants and static-like members
     companion object {
         private var _instance: UserRepository? = null
@@ -30,8 +29,10 @@ class UserRepository private constructor() : Observable<List<User>> {
     // 2 Properties: initialized in constructors,  directly and getters
     //Зависимость от абстракций, а не от реализаций
     private val userFile: File = File("users.json")
-    private val _observers: MutableList<Observer<List<User>>> = mutableListOf()
     private val _users: MutableList<User> = loadUsers()
+    val users = MutableObservable<List<User>>(_users)
+    private var _oldestUser = _users.maxBy { it.age }
+    val oldestUser = MutableObservable(_oldestUser)
 
 
     //3 Initialization block: used for complex initialization
@@ -41,21 +42,8 @@ class UserRepository private constructor() : Observable<List<User>> {
 
     // Secondary constructor(s)
     // Overridden methods
-    override fun addObserver(observer: Observer<List<User>>) {
-        _observers.add(observer)
-        observer.onChanged(_users)
-    }
-
-    override fun removeObserver(observer: Observer<List<User>>) {
-        _observers.remove(observer)
-    }
-
-    override fun notifyObservers() = _observers.forEach { it.onChanged(_users) }
-
 
     // Public methods
-    fun addOnUserChangeListener(observer: Observer<List<User>>) = addObserver(observer)
-
 
     fun saveUser(user: User) {
         val id = _users.maxOf { it.id } + 1
@@ -64,12 +52,21 @@ class UserRepository private constructor() : Observable<List<User>> {
             .also {
                 _users.add(it)
             }
-        notifyObservers()
+        notifyUsers()
+        if (user.age > _oldestUser.age) {
+            _oldestUser = user
+            notifyOldestUser()
+        }
     }
 
     fun deleteUser(id: Int) {
-        _users.removeIf { it.id == id }
-        notifyObservers()
+        val user = _users.find { it.id == id } ?: return
+        _users.remove(user)
+        notifyUsers()
+        if (user == oldestUser.currentValue) {
+            _oldestUser = _users.maxBy { it.age }
+            notifyOldestUser()
+        }
     }
 
     fun saveChanges() {
@@ -89,6 +86,9 @@ class UserRepository private constructor() : Observable<List<User>> {
         return json.decodeFromString<MutableList<User>>(content)
 
     }
+
+    private fun notifyUsers() = users.notifyObservers(_users)
+    private fun notifyOldestUser() = oldestUser.notifyObservers(_oldestUser)
 
     // Nested classes: defined at the end for better readability
 }
