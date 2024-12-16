@@ -3,7 +3,10 @@ package entities
 class MutableObservable<T>(initialValue: T) : Observable<T> {
     private val observers = mutableListOf<Observer<T>>()
     var currentValue: T = initialValue
-        private set
+        set(value) {
+            field = value
+            notifyObservers()
+        }
 
     override fun addObserver(observer: Observer<T>) {
         observers.add(observer)
@@ -14,8 +17,7 @@ class MutableObservable<T>(initialValue: T) : Observable<T> {
         observers.remove(observer)
     }
 
-    override fun notifyObservers(currentValue: T) {
-        this.currentValue = currentValue
+    override fun notifyObservers() {
         observers.forEach { it.onChanged(currentValue) }
     }
 }

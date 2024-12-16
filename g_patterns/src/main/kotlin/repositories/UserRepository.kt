@@ -1,6 +1,7 @@
 package repositories
 
 import entities.MutableObservable
+import entities.Observable
 import entities.User
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -29,10 +30,11 @@ class UserRepository private constructor() {
     // 2 Properties: initialized in constructors,  directly and getters
     //Зависимость от абстракций, а не от реализаций
     private val userFile: File = File("users.json")
-    private val _users: MutableList<User> = loadUsers()
-    val users = MutableObservable<List<User>>(_users)
-    private var _oldestUser = _users.maxBy { it.age }
-    val oldestUser = MutableObservable(_oldestUser)
+    private val userList = loadUsers()
+    private val _users = MutableObservable(userList.toList())
+    val users: Observable<List<User>> = _users
+    private val _oldestUser = MutableObservable(userList.maxBy { it.age })
+    val oldestUser: Observable<User> = _oldestUser
 
 
     //3 Initialization block: used for complex initialization
@@ -46,32 +48,29 @@ class UserRepository private constructor() {
     // Public methods
 
     fun saveUser(user: User) {
-        val id = _users.maxOf { it.id } + 1
+        val id = userList.maxOf { it.id } + 1
         user
             .copy(id = id)
             .also {
-                _users.add(it)
+                _users.currentValue = userList.apply { add(it) }
+                if (it.age > _oldestUser.currentValue.age) {
+                    _oldestUser.currentValue = it
+                }
             }
-        notifyUsers()
-        if (user.age > _oldestUser.age) {
-            _oldestUser = user
-            notifyOldestUser()
-        }
+
     }
 
     fun deleteUser(id: Int) {
-        val user = _users.find { it.id == id } ?: return
-        _users.remove(user)
-        notifyUsers()
-        if (user == oldestUser.currentValue) {
-            _oldestUser = _users.maxBy { it.age }
-            notifyOldestUser()
+        val user = userList.find { it.id == id } ?: return
+        _users.currentValue = userList.apply { remove(user) }
+        if (user == _oldestUser.currentValue) {
+            _oldestUser.currentValue = userList.maxBy { it.age }
         }
     }
 
     fun saveChanges() {
         json
-            .encodeToString(_users)
+            .encodeToString(userList)
             .also {
                 userFile.writeText(it)
             }
@@ -86,11 +85,6 @@ class UserRepository private constructor() {
         return json.decodeFromString<MutableList<User>>(content)
 
     }
-
-    private fun notifyUsers() = users.notifyObservers(_users)
-    private fun notifyOldestUser() = oldestUser.notifyObservers(_oldestUser)
-
-    // Nested classes: defined at the end for better readability
 }
 
 

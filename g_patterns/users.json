@@ -1,14 +1,5 @@
 [
   {
-    "id": 6,
-    "first_name": "Magnum",
-    "last_name": "Forlonge",
-    "age": 72,
-    "email": "mforlonge5@bizjournals.com",
-    "address": "693 Basil Junction",
-    "phone_number": "710-761-2731"
-  },
-  {
     "id": 7,
     "first_name": "Dale",
     "last_name": "Bohlens",
@@ -58,6 +49,15 @@
     "first_name": "Петух",
     "last_name": "Обосанный 2",
     "age": 10,
+    "email": "",
+    "address": "",
+    "phone_number": ""
+  },
+  {
+    "id": 14,
+    "first_name": "Andrey",
+    "last_name": "Vazhenin",
+    "age": 120,
     "email": "",
     "address": "",
     "phone_number": ""
