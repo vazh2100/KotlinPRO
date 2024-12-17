@@ -37,13 +37,21 @@ class Administrator {
         print("Введите возраст ")
         val age = readln().toInt()
         val user = User(name, lastName, age)
-        userRepository.saveUser(user)
+        // Администратор является клиентом в паттерне Command
+        UsersInvoker.addCommand {
+            // Репозиторий является ресивером в паттерне Command
+            userRepository.saveUser(user)
+        }
+
     }
 
     private fun deleteUser() {
         print("Введите id работника для удаления: ")
         val id = readln().toInt()
-        userRepository.deleteUser(id)
+        UsersInvoker.addCommand {
+            userRepository.deleteUser(id)
+        }
+
     }
 
 }

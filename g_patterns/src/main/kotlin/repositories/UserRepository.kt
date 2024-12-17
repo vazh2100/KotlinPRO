@@ -47,7 +47,9 @@ class UserRepository private constructor() {
 
     // Public methods
 
+
     fun saveUser(user: User) {
+        Thread.sleep(2000)
         val id = userList.maxOf { it.id } + 1
         user
             .copy(id = id)
@@ -57,15 +59,17 @@ class UserRepository private constructor() {
                     _oldestUser.currentValue = it
                 }
             }
-
     }
 
     fun deleteUser(id: Int) {
         val user = userList.find { it.id == id } ?: return
+        Thread.sleep(2000)
         _users.currentValue = userList.apply { remove(user) }
         if (user == _oldestUser.currentValue) {
             _oldestUser.currentValue = userList.maxBy { it.age }
         }
+
+
     }
 
     fun saveChanges() {
