@@ -2,7 +2,7 @@ package entities
 
 import repositories.UserRepository
 
-
+///Администратор может выполнять только те команды, которые реализованы в sealed interface
 class Administrator {
     private val userRepository = UserRepository.instance()
 
@@ -17,7 +17,7 @@ class Administrator {
             val operationCode = operationTypes[readln().toInt()]
             when (operationCode) {
                 OperationType.EXIT -> {
-                    userRepository.saveChanges()
+                    UsersInvoker.addCommand(AdministratorCommand.SaveChanges(userRepository))
                     break
                 }
 
@@ -38,19 +38,15 @@ class Administrator {
         val age = readln().toInt()
         val user = User(name, lastName, age)
         // Администратор является клиентом в паттерне Command
-        UsersInvoker.addCommand {
-            // Репозиторий является ресивером в паттерне Command
-            userRepository.saveUser(user)
-        }
+        ///Администратор может выполнять только те команды, которые реализованы в sealed interface
+        UsersInvoker.addCommand(AdministratorCommand.SaveUser(userRepository, user))
 
     }
 
     private fun deleteUser() {
         print("Введите id работника для удаления: ")
         val id = readln().toInt()
-        UsersInvoker.addCommand {
-            userRepository.deleteUser(id)
-        }
+        UsersInvoker.addCommand(AdministratorCommand.DeleteUser(userRepository, id))
 
     }
 

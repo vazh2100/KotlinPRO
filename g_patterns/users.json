@@ -36,24 +36,6 @@
     "phone_number": ""
   },
   {
-    "id": 12,
-    "first_name": "Петух",
-    "last_name": "Обосанный",
-    "age": 35,
-    "email": "",
-    "address": "",
-    "phone_number": ""
-  },
-  {
-    "id": 13,
-    "first_name": "Петух",
-    "last_name": "Обосанный 2",
-    "age": 10,
-    "email": "",
-    "address": "",
-    "phone_number": ""
-  },
-  {
     "id": 14,
     "first_name": "Andrey",
     "last_name": "Vazhenin",
