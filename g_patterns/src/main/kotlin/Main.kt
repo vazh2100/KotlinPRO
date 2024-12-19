@@ -1,9 +1,14 @@
-import entities.Administrator
-import ui.Display
+import entities.Drink
 
 fun main() {
-    Display().show()
-    Administrator().work()
+    val drink = Drink
+        .Builder()
+        .type("Tea")
+        .temperature("Cold")
+        .diningOption("In place")
+        .build()
+
+    println(drink)
 }
 
 
