@@ -8,5 +8,7 @@ interface NumbersMutableList {
 
     fun get(index: Int): Int
 
+    fun removeAt(index: Int)
+
 
 }

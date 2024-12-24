@@ -31,6 +31,16 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
+    fun `when add 100 element then size is 100`(list: NumbersMutableList) {
+        repeat(100) {
+            list.add(it)
+        }
+        val expected = 100
+        assertEquals(expected, list.size)
+    }
+
+    @ParameterizedTest
+    @MethodSource("source")
     fun `when get 5th element then result is correct`(list: NumbersMutableList) {
         repeat(10) {
             list.add(it)
@@ -38,6 +48,33 @@ class NumbersMutableListTest {
         val result = list.get(4)
         val expected = 4
         assertEquals(expected, result)
+    }
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when get 50th element then result is correct`(list: NumbersMutableList) {
+        repeat(100) {
+            list.add(it)
+        }
+        val result = list.get(49)
+        val expected = 49
+        assertEquals(expected, result)
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when remove 50th element then size is 99`(list: NumbersMutableList) {
+        repeat(100) {
+            list.add(it)
+        }
+        list.removeAt(50)
+        val expected = 99
+        assertEquals(expected, list.size)
+
+        val result = list.get(50)
+        val expected2 = 51
+        assertEquals(expected2, result)
     }
 
 }
