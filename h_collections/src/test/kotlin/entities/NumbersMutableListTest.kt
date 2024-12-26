@@ -16,7 +16,7 @@ class NumbersMutableListTest {
     @ParameterizedTest
     @MethodSource("source")
     fun `when add 1 element then size is 1`(list: NumbersMutableList) {
-        list.add(0)
+        list + 0
         val expected = 1
         assertEquals(expected, list.size)
     }
@@ -25,7 +25,7 @@ class NumbersMutableListTest {
     @MethodSource("source")
     fun `when add 10 element then size is 10`(list: NumbersMutableList) {
         repeat(10) {
-            list.add(it)
+            list + it
         }
         val expected = 10
         assertEquals(expected, list.size)
@@ -35,7 +35,7 @@ class NumbersMutableListTest {
     @MethodSource("source")
     fun `when add 100 element then size is 100`(list: NumbersMutableList) {
         repeat(100) {
-            list.add(it)
+            list + it
         }
         val expected = 100
         assertEquals(expected, list.size)
@@ -45,9 +45,9 @@ class NumbersMutableListTest {
     @MethodSource("source")
     fun `when get 5th element then result is correct`(list: NumbersMutableList) {
         repeat(10) {
-            list.add(it)
+            list + it
         }
-        val result = list.get(4)
+        val result = list[4]
         val expected = 4
         assertEquals(expected, result)
     }
@@ -56,9 +56,9 @@ class NumbersMutableListTest {
     @MethodSource("source")
     fun `when get 50th element then result is correct`(list: NumbersMutableList) {
         repeat(100) {
-            list.add(it)
+            list + it
         }
-        val result = list.get(49)
+        val result = list[49]
         val expected = 49
         assertEquals(expected, result)
     }
@@ -68,13 +68,13 @@ class NumbersMutableListTest {
     @MethodSource("source")
     fun `when remove 50th element then size is 99`(list: NumbersMutableList) {
         repeat(100) {
-            list.add(it)
+            list + it
         }
         list.removeAt(50)
         val expected = 99
         assertEquals(expected, list.size)
 
-        val result = list.get(50)
+        val result = list[50]
         val expected2 = 51
         assertEquals(expected2, result)
     }
@@ -84,13 +84,13 @@ class NumbersMutableListTest {
     @MethodSource("source")
     fun `when remove element then size is 99`(list: NumbersMutableList) {
         repeat(100) {
-            list.add(it)
+            list + it
         }
-        list.remove(50)
+        list - 50
         val expected = 99
         assertEquals(expected, list.size)
 
-        val result = list.get(50)
+        val result = list[50]
         val expected2 = 51
         assertEquals(expected2, result)
     }
@@ -202,6 +202,7 @@ class NumbersMutableListTest {
         val result2 = list.get(index)
         val expected2 = 77
         assertEquals(expected2, result2)
+
 
         val result3 = list.get(index + 1)
         val expected3 = index
