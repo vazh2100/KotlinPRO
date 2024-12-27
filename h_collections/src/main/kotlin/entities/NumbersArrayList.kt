@@ -1,13 +1,14 @@
 package entities
 
-class NumbersArrayList : NumbersMutableList {
+class NumbersArrayList(private val capacity: Int = DEFAULT_CAPACITY) : NumbersMutableList {
 
     private companion object {
-        const val DEFAULT_SIZE = 10
+        const val DEFAULT_CAPACITY = 10
     }
 
-    private var array = arrayOfNulls<Int>(DEFAULT_SIZE) // выделяет в памяти 4*10 байт c 10 ячейками null
+    private var array = arrayOfNulls<Int>(capacity) // выделяет в памяти 4*10 байт c 10 ячейками null
 //    private val array = IntArray(10) // выделяет в памяти 4*10 байт c 10 ячейками 0
+
 
 
     override var size: Int = 0
@@ -70,7 +71,7 @@ class NumbersArrayList : NumbersMutableList {
     }
 
     override fun clear() {
-        array = arrayOfNulls(DEFAULT_SIZE)
+        array = arrayOfNulls(capacity)
         size = 0
     }
 
