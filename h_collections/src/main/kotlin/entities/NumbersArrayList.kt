@@ -10,53 +10,31 @@ class NumbersArrayList(private val capacity: Int = DEFAULT_CAPACITY) : NumbersMu
 //    private val array = IntArray(10) // выделяет в памяти 4*10 байт c 10 ячейками 0
 
 
-
     override var size: Int = 0
         private set
 
     override fun add(number: Int) {
-        if (array.size == size) {
-            val newArray = arrayOfNulls<Int>(array.size * 2)
-            for (index in array.indices) {
-                newArray[index] = array[index]
-            }
-            array = newArray
-        }
+        increaseCapacityIfNeeded()
         array[size] = number
         size++
     }
 
     override fun insert(index: Int, number: Int) {
         if (index > size) error("Index out of bound")
-        if (array.size == size) {
-            val newArray = arrayOfNulls<Int>(array.size * 2)
-            for (i in newArray.indices) {
-                when (i) {
-                    in 0 until index -> newArray[i] = array[i]
-                    index -> newArray[i] = number
-                    in (index + 1)..size -> newArray[i] = array[i - 1]
-                    else -> break
-                }
-            }
-            array = newArray
-        } else {
-            for (i in size downTo index + 1) {
-                array[i] = array[i - 1]
-            }
-            array[index] = number
-        }
+        increaseCapacityIfNeeded()
+        System.arraycopy(array, index, array, index + 1, size - index)
+        array[index] = number
         size++
     }
 
     override fun get(index: Int): Int {
-        if (index < 0 || index >= size) error("Index out of bound")
+        checkIndex(index)
         return array[index]!!
     }
 
     override fun removeAt(index: Int) {
-        for (i in index..size - 2) {
-            array[i] = array[i + 1]
-        }
+        checkIndex(index)
+        System.arraycopy(array, index + 1, array, index, size - index - 1)
         size--
         array[size] = null
     }
@@ -84,5 +62,16 @@ class NumbersArrayList(private val capacity: Int = DEFAULT_CAPACITY) : NumbersMu
 
     override fun toString(): String {
         return array.joinToString(", ")
+    }
+
+    private fun increaseCapacityIfNeeded() {
+        if (array.size == size) {
+            array = array.copyInto(arrayOfNulls(array.size * 2), 0)
+        }
+    }
+
+
+    private fun checkIndex(index: Int) {
+        if (index < 0 || index >= size) error("Index out of bound")
     }
 }

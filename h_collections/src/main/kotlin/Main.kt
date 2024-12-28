@@ -1,9 +1,19 @@
+import kotlin.time.measureTime
+
 fun main() {
     val numbers = mutableListOf<Int>()
 
-    while (true) {
-        val num = readln().toInt()
-        if (num != 0) numbers.add(num) else break
+    val a = measureTime {
+        repeat(100_000_000) {
+            numbers.add(it)
+        }
     }
-    numbers.forEach(::println)
+
+    val b = measureTime {
+        repeat(100) {
+            numbers.add(0, it)
+        }
+    }
+    println(a)
+    println(b)
 }

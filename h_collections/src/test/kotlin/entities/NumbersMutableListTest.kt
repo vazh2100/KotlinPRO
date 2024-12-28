@@ -54,6 +54,15 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
+    fun `when get index 10 element then result is throws`(list: NumbersMutableList) {
+        repeat(10) {
+            list + it
+        }
+        assertThrows(IllegalStateException::class.java) { list[10] }
+    }
+
+    @ParameterizedTest
+    @MethodSource("source")
     fun `when get 50th element then result is correct`(list: NumbersMutableList) {
         repeat(100) {
             list + it
