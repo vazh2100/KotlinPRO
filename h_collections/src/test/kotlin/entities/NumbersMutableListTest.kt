@@ -1,7 +1,6 @@
 package entities
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -10,7 +9,10 @@ class NumbersMutableListTest {
 
     companion object {
         @JvmStatic
-        fun source() = listOf(NumbersArrayList())
+        fun source() = listOf(
+//            NumbersArrayList(),
+            NumbersLinkedList()
+        )
     }
 
     @ParameterizedTest
@@ -98,9 +100,36 @@ class NumbersMutableListTest {
         list - 50
         val expected = 99
         assertEquals(expected, list.size)
-
         val result = list[50]
         val expected2 = 51
+        assertEquals(expected2, result)
+    }
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when remove last element then size is 99`(list: NumbersMutableList) {
+        repeat(100) {
+            list + it
+        }
+        list - 99
+        val expected = 99
+        assertEquals(expected, list.size)
+        val result = list[98]
+        val expected2 = 98
+        assertEquals(expected2, result)
+    }
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when remove first element then size is 99`(list: NumbersMutableList) {
+        repeat(100) {
+            list + it
+        }
+        list - 0
+        val expected = 99
+        assertEquals(expected, list.size)
+        val result = list[0]
+        val expected2 = 1
         assertEquals(expected2, result)
     }
 
@@ -218,17 +247,16 @@ class NumbersMutableListTest {
         assertEquals(expected3, result3)
     }
 
-    @Test
-//    @MethodSource("source")
-    fun `when insert element at 1 index then size is 6`() {
-        val list: NumbersMutableList = NumbersArrayList()
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when insert element at 1 index then size is 6`(list: NumbersMutableList) {
         for (i in 0..4) {
             list.add(i)
         }
         val index = 1
 
         list.insert(index, 77)
-        println(list.toString())
+        println(list)
         val result1 = list.size
         val expected1 = 6
         assertEquals(expected1, result1)
@@ -361,17 +389,16 @@ class NumbersMutableListTest {
         assertEquals(expected3, result3)
     }
 
-    @Test
-//    @MethodSource("source")
-    fun `when insert element at 1 index then size is 11`() {
-        val list: NumbersMutableList = NumbersArrayList()
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when insert element at 1 index then size is 11`(list: NumbersMutableList) {
         for (i in 0..9) {
             list.add(i)
         }
         val index = 1
 
         list.insert(index, 77)
-        println(list.toString())
+        println(list)
         val result1 = list.size
         val expected1 = 11
         assertEquals(expected1, result1)

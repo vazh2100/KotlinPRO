@@ -60,16 +60,11 @@ class NumbersArrayList(private val capacity: Int = DEFAULT_CAPACITY) : NumbersMu
         return false
     }
 
-    override fun toString(): String {
-        return array.joinToString(", ")
-    }
-
     private fun increaseCapacityIfNeeded() {
         if (array.size == size) {
             array = array.copyInto(arrayOfNulls(array.size * 2), 0)
         }
     }
-
 
     private fun checkIndex(index: Int) {
         if (index < 0 || index >= size) error("Index out of bound")
