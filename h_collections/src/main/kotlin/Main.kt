@@ -1,19 +1,9 @@
-import kotlin.time.measureTime
+import entities.NumbersHashSet
 
 fun main() {
-    val numbers = mutableListOf<Int>()
+    val numbers = NumbersHashSet()
 
-    val a = measureTime {
-        repeat(100_000_000) {
-            numbers.add(it)
-        }
+    repeat(100) {
+        numbers.add(it)
     }
-
-    val b = measureTime {
-        repeat(100) {
-            numbers.add(0, it)
-        }
-    }
-    println(a)
-    println(b)
 }
