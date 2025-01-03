@@ -3,7 +3,7 @@ package entities
 
 import kotlin.math.abs
 
-class NumbersHashSet(capacity: Int = DEFAULT_CAPACITY) : NumbersMutableSet {
+class NumbersHashSet(private val capacity: Int = DEFAULT_CAPACITY) : NumbersMutableSet {
 
     private companion object {
         const val DEFAULT_CAPACITY = 16
@@ -22,16 +22,45 @@ class NumbersHashSet(capacity: Int = DEFAULT_CAPACITY) : NumbersMutableSet {
     }
 
 
-    override fun remove(number: Int) {
-        TODO("Not yet implemented")
+    override fun remove(number: Int): Boolean {
+        val position = getElementPosition(number, elements.size)
+        val element = elements[position] ?: return false
+
+        if (element.value == number) {
+            elements[position] = element.next
+            size--
+            return true
+        } else {
+            var previous = element
+            var current = element.next
+            while (current != null) {
+                if (current.value == number) {
+                    previous.next = current.next
+                    size--
+                    return true
+                } else {
+                    previous = current
+                    current = current.next
+                }
+            }
+        }
+
+        return false
     }
 
+
     override fun clear() {
-        TODO("Not yet implemented")
+        elements = arrayOfNulls(capacity)
+        size = 0
     }
 
     override fun contains(number: Int): Boolean {
-        TODO("Not yet implemented")
+        var current = elements[getElementPosition(number, elements.size)]
+        while (current != null) {
+            if (current.value == number) return true
+            current = current.next
+        }
+        return false
     }
 
     private fun getElementPosition(number: Int, size: Int): Int {
@@ -39,7 +68,6 @@ class NumbersHashSet(capacity: Int = DEFAULT_CAPACITY) : NumbersMutableSet {
     }
 
     private fun increaseCapacity() {
-        println(elements.contentToString())
         val newSize = elements.size * 2
         val newArray = arrayOfNulls<Node>(newSize)
         for (element in elements) {
@@ -75,6 +103,11 @@ class NumbersHashSet(capacity: Int = DEFAULT_CAPACITY) : NumbersMutableSet {
 
         }
     }
+
+    override fun toString(): String {
+        return "NumbersHashSet(elements=${elements.contentToString()})"
+    }
+
 
     data class Node(
         val value: Int,
