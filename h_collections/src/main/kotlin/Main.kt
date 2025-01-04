@@ -1,9 +1,12 @@
-import entities.NumbersHashSet
+import entities.Item
+import entities.MyHashSet
 
 fun main() {
-    val numbers = NumbersHashSet()
+    val items = MyHashSet<Item>()
+    val item = Item(10)
+    items.add(item)
+    println(items.contains(item))
+    item.number = 9
+    println(items.contains(item))
 
-    repeat(100) {
-        numbers.add(it)
-    }
 }
