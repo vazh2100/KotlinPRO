@@ -5,19 +5,19 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
 
-class NumbersMutableListTest {
+class MyMutableListTest {
 
     companion object {
         @JvmStatic
         fun source() = listOf(
-//            NumbersArrayList(),
-            NumbersLinkedList()
+            MyArrayList(),
+            MyLinkedList<Int>()
         )
     }
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when add 1 element then size is 1`(list: NumbersMutableList) {
+    fun `when add 1 element then size is 1`(list: MyMutableList<Int>) {
         list + 0
         val expected = 1
         assertEquals(expected, list.size)
@@ -25,7 +25,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when add 10 element then size is 10`(list: NumbersMutableList) {
+    fun `when add 10 element then size is 10`(list: MyMutableList<Int>) {
         repeat(10) {
             list + it
         }
@@ -35,7 +35,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when add 100 element then size is 100`(list: NumbersMutableList) {
+    fun `when add 100 element then size is 100`(list: MyMutableList<Int>) {
         repeat(100) {
             list + it
         }
@@ -45,7 +45,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when get 5th element then result is correct`(list: NumbersMutableList) {
+    fun `when get 5th element then result is correct`(list: MyMutableList<Int>) {
         repeat(10) {
             list + it
         }
@@ -56,7 +56,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when get index 10 element then result is throws`(list: NumbersMutableList) {
+    fun `when get index 10 element then result is throws`(list: MyMutableList<Int>) {
         repeat(10) {
             list + it
         }
@@ -65,7 +65,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when get 50th element then result is correct`(list: NumbersMutableList) {
+    fun `when get 50th element then result is correct`(list: MyMutableList<Int>) {
         repeat(100) {
             list + it
         }
@@ -77,7 +77,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when remove 50th element then size is 99`(list: NumbersMutableList) {
+    fun `when remove 50th element then size is 99`(list: MyMutableList<Int>) {
         repeat(100) {
             list + it
         }
@@ -93,7 +93,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when remove element then size is 99`(list: NumbersMutableList) {
+    fun `when remove element then size is 99`(list: MyMutableList<Int>) {
         repeat(100) {
             list + it
         }
@@ -107,7 +107,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when remove last element then size is 99`(list: NumbersMutableList) {
+    fun `when remove last element then size is 99`(list: MyMutableList<Int>) {
         repeat(100) {
             list + it
         }
@@ -121,7 +121,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when remove first element then size is 99`(list: NumbersMutableList) {
+    fun `when remove first element then size is 99`(list: MyMutableList<Int>) {
         repeat(100) {
             list + it
         }
@@ -135,7 +135,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 2 index then size is 6`(list: NumbersMutableList) {
+    fun `when insert element at 2 index then size is 6`(list: MyMutableList<Int>) {
         for (i in 0..4) {
             list.add(i)
         }
@@ -162,7 +162,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 4 index then size is 6`(list: NumbersMutableList) {
+    fun `when insert element at 4 index then size is 6`(list: MyMutableList<Int>) {
         for (i in 0..4) {
             list.add(i)
         }
@@ -189,7 +189,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 5 index then size is 6`(list: NumbersMutableList) {
+    fun `when insert element at 5 index then size is 6`(list: MyMutableList<Int>) {
         for (i in 0..4) {
             list.add(i)
         }
@@ -214,7 +214,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 6 index then throws`(list: NumbersMutableList) {
+    fun `when insert element at 6 index then throws`(list: MyMutableList<Int>) {
         for (i in 0..4) {
             list.add(i)
         }
@@ -225,7 +225,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 0 index then size is 6`(list: NumbersMutableList) {
+    fun `when insert element at 0 index then size is 6`(list: MyMutableList<Int>) {
         for (i in 0..4) {
             list.add(i)
         }
@@ -249,7 +249,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 1 index then size is 6`(list: NumbersMutableList) {
+    fun `when insert element at 1 index then size is 6`(list: MyMutableList<Int>) {
         for (i in 0..4) {
             list.add(i)
         }
@@ -276,7 +276,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 5 index then size is 11`(list: NumbersMutableList) {
+    fun `when insert element at 5 index then size is 11`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }
@@ -303,7 +303,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 9 index then size is 11`(list: NumbersMutableList) {
+    fun `when insert element at 9 index then size is 11`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }
@@ -332,7 +332,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 10 index then size is 11`(list: NumbersMutableList) {
+    fun `when insert element at 10 index then size is 11`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }
@@ -357,7 +357,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 11 index then throws`(list: NumbersMutableList) {
+    fun `when insert element at 11 index then throws`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }
@@ -368,7 +368,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 0 index then size is 11`(list: NumbersMutableList) {
+    fun `when insert element at 0 index then size is 11`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }
@@ -391,7 +391,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when insert element at 1 index then size is 11`(list: NumbersMutableList) {
+    fun `when insert element at 1 index then size is 11`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }
@@ -418,7 +418,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when clear size is 0`(list: NumbersMutableList) {
+    fun `when clear size is 0`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }
@@ -431,7 +431,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when call contains return true`(list: NumbersMutableList) {
+    fun `when call contains return true`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }
@@ -441,7 +441,7 @@ class NumbersMutableListTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when call contains return false`(list: NumbersMutableList) {
+    fun `when call contains return false`(list: MyMutableList<Int>) {
         for (i in 0..9) {
             list.add(i)
         }

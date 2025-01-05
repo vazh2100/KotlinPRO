@@ -1,32 +1,32 @@
 package entities
 
-class NumbersLinkedList : NumbersMutableList {
+class MyLinkedList<T> : MyMutableList<T> {
 
-    private var first: Node? = null
-    private var last: Node? = null
+    private var first: Node<T>? = null
+    private var last: Node<T>? = null
 
     override var size: Int = 0
         private set
 
-    override fun add(number: Int) {
-        Node(number).link(last, null)
+    override fun add(element: T) {
+        Node(element).link(last, null)
     }
 
 
-    override fun insert(index: Int, number: Int) {
+    override fun insert(index: Int, element: T) {
         when (index) {
             !in 0..size -> error("Index out of bound")
-            size -> add(number)
-            0 -> Node(number).link(null, first)
+            size -> add(element)
+            0 -> Node(element).link(null, first)
             else -> {
                 val previous = getNode(index - 1)
                 val next = previous.next
-                Node(number).link(previous, next)
+                Node(element).link(previous, next)
             }
         }
     }
 
-    override fun get(index: Int): Int {
+    override fun get(index: Int): T {
         checkIndex(index)
         return getNode(index).value
     }
@@ -36,10 +36,10 @@ class NumbersLinkedList : NumbersMutableList {
         getNode(index).unlink()
     }
 
-    override fun remove(number: Int) {
+    override fun remove(element: T) {
         var current = first
         repeat(size) {
-            if (current?.value == number) {
+            if (current?.value == element) {
                 current?.unlink()
                 return
             } else {
@@ -55,10 +55,10 @@ class NumbersLinkedList : NumbersMutableList {
         size = 0
     }
 
-    override fun contains(number: Int): Boolean {
+    override fun contains(element: T): Boolean {
         var current = first
         repeat(size) {
-            if (current?.value == number) {
+            if (current?.value == element) {
                 return true
             } else {
                 current = current?.next
@@ -82,7 +82,7 @@ class NumbersLinkedList : NumbersMutableList {
         if (index < 0 || index >= size) error("Index out of bound")
     }
 
-    private fun getNode(index: Int): Node {
+    private fun getNode(index: Int): Node<T> {
         if (index == 0) return first!!
         if (index == size - 1) return last!!
         if (index < size / 2) {
@@ -101,7 +101,7 @@ class NumbersLinkedList : NumbersMutableList {
 
     }
 
-    private fun Node.unlink() {
+    private fun Node<T>.unlink() {
         val previous = this.previous
         val next = this.next
         previous?.next = next
@@ -115,7 +115,7 @@ class NumbersLinkedList : NumbersMutableList {
         size--
     }
 
-    private fun Node.link(previous: Node?, next: Node?) {
+    private fun Node<T>.link(previous: Node<T>?, next: Node<T>?) {
         this.next = next
         this.previous = previous
         previous?.next = this
@@ -130,10 +130,10 @@ class NumbersLinkedList : NumbersMutableList {
     }
 
 
-    class Node(
-        val value: Int
+    class Node<T>(
+        val value: T
     ) {
-        var previous: Node? = null
-        var next: Node? = null
+        var previous: Node<T>? = null
+        var next: Node<T>? = null
     }
 }

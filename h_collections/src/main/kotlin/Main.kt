@@ -8,5 +8,4 @@ fun main() {
     println(items.contains(item))
     item.number = 9
     println(items.contains(item))
-
 }
