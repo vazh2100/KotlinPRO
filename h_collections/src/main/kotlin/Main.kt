@@ -2,6 +2,7 @@ import entities.MyHashSet
 
 
 fun main() {
+    mutableListOf(4, 5).removeIf { it == 4 }
     val items = MyHashSet<Int>()
 
     repeat(10) {
@@ -17,5 +18,4 @@ fun main() {
         val item = iterator.next()
         println(item)
     }
-
 }

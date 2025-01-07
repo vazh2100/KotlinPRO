@@ -21,17 +21,21 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
     override var size: Int = 0
         private set
 
+    private var modCount = 0
+
 
     override fun iterator(): Iterator<T> {
         return object : Iterator<T> {
             private var index = 0
             private var foundElements = 0
             private var currentNode = elements[index]
+            private val capturedModCount = modCount
             override fun hasNext(): Boolean {
                 return foundElements < size
             }
 
             override fun next(): T {
+                if (capturedModCount != modCount) throw ConcurrentModificationException()
                 while (currentNode == null) {
                     currentNode = elements[++index]
                 }
@@ -46,7 +50,12 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
 
     override fun add(element: T): Boolean {
         if (size >= elements.size * LOAD_FACTOR) increaseCapacity()
-        return add(element, elements).also { if (it) size++ }
+        return add(element, elements).also {
+            if (it) {
+                size++
+                modCount++
+            }
+        }
     }
 
 
@@ -57,6 +66,7 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
         if (node.value == element) {
             elements[position] = node.next
             size--
+            modCount++
             return true
         } else {
             var previous = node
@@ -65,6 +75,7 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
                 if (current.value == element) {
                     previous.next = current.next
                     size--
+                    modCount++
                     return true
                 } else {
                     previous = current
@@ -79,6 +90,7 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
     override fun clear() {
         elements = arrayOfNulls(capacity)
         size = 0
+        modCount++
     }
 
     override fun contains(element: T): Boolean {

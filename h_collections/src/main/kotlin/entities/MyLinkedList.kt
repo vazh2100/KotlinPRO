@@ -8,15 +8,20 @@ class MyLinkedList<T> : MyMutableList<T> {
     override var size: Int = 0
         private set
 
+    private var modCount = 0
+
 
     override fun iterator(): Iterator<T> {
         return object : Iterator<T> {
             private var next = first
+            private val capturedModCount = modCount
+
             override fun hasNext(): Boolean {
                 return next != null
             }
 
             override fun next(): T {
+                if (capturedModCount != modCount) throw ConcurrentModificationException()
                 return next!!.value.also { next = next?.next }
             }
 
@@ -70,6 +75,7 @@ class MyLinkedList<T> : MyMutableList<T> {
         first = null
         last = null
         size = 0
+        modCount++
     }
 
     override fun contains(element: T): Boolean {
@@ -130,6 +136,7 @@ class MyLinkedList<T> : MyMutableList<T> {
             last = previous
         }
         size--
+        modCount++
     }
 
     private fun Node<T>.link(previous: Node<T>?, next: Node<T>?) {
@@ -144,6 +151,7 @@ class MyLinkedList<T> : MyMutableList<T> {
             last = this
         }
         size++
+        modCount++
     }
 
 

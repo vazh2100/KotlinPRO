@@ -11,8 +11,8 @@ class MyMutableListTest {
     companion object {
         @JvmStatic
         fun source() = listOf(
-            MyArrayList<Int>()
-//            MyLinkedList<Int>()
+            MyArrayList(),
+            MyLinkedList<Int>()
         )
     }
 
