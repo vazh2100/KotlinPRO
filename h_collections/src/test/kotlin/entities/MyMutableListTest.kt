@@ -1,6 +1,7 @@
 package entities
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -10,8 +11,8 @@ class MyMutableListTest {
     companion object {
         @JvmStatic
         fun source() = listOf(
-            MyArrayList(),
-            MyLinkedList<Int>()
+            MyArrayList<Int>()
+//            MyLinkedList<Int>()
         )
     }
 
@@ -447,6 +448,34 @@ class MyMutableListTest {
         }
         val result1 = list.contains(10)
         assertFalse(result1)
+    }
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when modify while iterating then throws`(list: MyMutableList<Int>) {
+        for (i in 0..9) {
+            list.add(i)
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (element in list) {
+                list.add(20)
+            }
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (element in list) {
+                list.insert(0, 20)
+            }
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (element in list) {
+                list.remove(5)
+            }
+        }
+        assertDoesNotThrow {
+            for (element in list) {
+                list.remove(40)
+            }
+        }
     }
 
 

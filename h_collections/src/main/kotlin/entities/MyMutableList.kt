@@ -1,23 +1,13 @@
 package entities
 
-interface MyMutableList<T> {
-
-    val size: Int
-
-    fun add(element: T)
-    operator fun plus(element: T) = add(element)
+interface MyMutableList<T> : MyMutableCollection<T> {
+    override val size: Int
+    override fun add(element: T): Boolean
+    override fun remove(element: T): Boolean
+    override fun clear()
+    override fun contains(element: T): Boolean
 
     fun insert(index: Int, element: T)
-
     operator fun get(index: Int): T
-
     fun removeAt(index: Int)
-
-    fun remove(element: T)
-    operator fun minus(element: T) = remove(element)
-
-    fun clear()
-
-    fun contains(element: T): Boolean
-
 }

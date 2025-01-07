@@ -1,11 +1,21 @@
-import entities.Item
 import entities.MyHashSet
 
+
 fun main() {
-    val items = MyHashSet<Item>()
-    val item = Item(10)
-    items.add(item)
-    println(items.contains(item))
-    item.number = 9
-    println(items.contains(item))
+    val items = MyHashSet<Int>()
+
+    repeat(10) {
+        items.add(it * 2)
+    }
+    // Эта запись идентична
+    for (item in items) {
+        println(item)
+    }
+    // Этой записи
+    val iterator = items.iterator()
+    while (iterator.hasNext()) {
+        val item = iterator.next()
+        println(item)
+    }
+
 }

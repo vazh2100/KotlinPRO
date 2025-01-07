@@ -22,6 +22,28 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
         private set
 
 
+    override fun iterator(): Iterator<T> {
+        return object : Iterator<T> {
+            private var index = 0
+            private var foundElements = 0
+            private var currentNode = elements[index]
+            override fun hasNext(): Boolean {
+                return foundElements < size
+            }
+
+            override fun next(): T {
+                while (currentNode == null) {
+                    currentNode = elements[++index]
+                }
+                return currentNode!!.value.also {
+                    currentNode = currentNode?.next
+                    foundElements++
+                }
+            }
+        }
+    }
+
+
     override fun add(element: T): Boolean {
         if (size >= elements.size * LOAD_FACTOR) increaseCapacity()
         return add(element, elements).also { if (it) size++ }

@@ -247,4 +247,27 @@ class MyMutableSetTest {
             assertTrue(set.contains(Item(it * 16)))
         }
     }
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when modify while iterating then throws`(set: MyMutableSet<Item>) {
+        for (i in 0..9) {
+            set.add(Item(i))
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (element in set) {
+                set.add(Item(20))
+            }
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (element in set) {
+                set.remove(Item(5))
+            }
+        }
+        assertDoesNotThrow {
+            for (element in set) {
+                set.remove(Item(40))
+            }
+        }
+    }
 }

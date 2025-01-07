@@ -8,8 +8,24 @@ class MyLinkedList<T> : MyMutableList<T> {
     override var size: Int = 0
         private set
 
-    override fun add(element: T) {
+
+    override fun iterator(): Iterator<T> {
+        return object : Iterator<T> {
+            private var next = first
+            override fun hasNext(): Boolean {
+                return next != null
+            }
+
+            override fun next(): T {
+                return next!!.value.also { next = next?.next }
+            }
+
+        }
+    }
+
+    override fun add(element: T): Boolean {
         Node(element).link(last, null)
+        return true
     }
 
 
@@ -36,16 +52,17 @@ class MyLinkedList<T> : MyMutableList<T> {
         getNode(index).unlink()
     }
 
-    override fun remove(element: T) {
+    override fun remove(element: T): Boolean {
         var current = first
         repeat(size) {
             if (current?.value == element) {
                 current?.unlink()
-                return
+                return true
             } else {
                 current = current?.next
             }
         }
+        return false
     }
 
 
