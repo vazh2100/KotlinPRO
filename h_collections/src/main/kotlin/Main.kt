@@ -1,21 +1,26 @@
-import entities.MyHashSet
+import entities.Item
+import java.util.*
+import kotlin.random.Random
 
 
 fun main() {
-    mutableListOf(4, 5).removeIf { it == 4 }
-    val items = MyHashSet<Int>()
+    //Создают linked hash set
+    setOf("a", "b") // неизменяемый
+    mutableSetOf("a", "b") // изменяемый
+    linkedSetOf("a", "b")  // изменяемый
 
-    repeat(10) {
-        items.add(it * 2)
+    //Создаёт HashSet. HashSet является изменяемой коллекцией
+    hashSetOf("").remove("")
+
+    //Создаёт TreeSet. Она является изменяемой
+    TreeSet<Item>()
+    val tree = sortedSetOf<Item>()
+
+    repeat(100) {
+        tree.add(Item(Random.nextInt(100)))
     }
-    // Эта запись идентична
-    for (item in items) {
-        println(item)
+    for (element in tree) {
+        println(element)
     }
-    // Этой записи
-    val iterator = items.iterator()
-    while (iterator.hasNext()) {
-        val item = iterator.next()
-        println(item)
-    }
+
 }

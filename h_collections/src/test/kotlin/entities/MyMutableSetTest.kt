@@ -1,5 +1,6 @@
 package entities
 
+import MyLinkedHashSet
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -9,7 +10,8 @@ class MyMutableSetTest {
     companion object {
         @JvmStatic
         fun source() = listOf(
-            MyHashSet<Item>()
+            MyHashSet<Item>(),
+            MyLinkedHashSet()
         )
     }
 
@@ -268,6 +270,31 @@ class MyMutableSetTest {
             for (element in set) {
                 set.remove(Item(40))
             }
+        }
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when iterating the order is correct`(set: MyMutableSet<Item>) {
+        val expected = mutableListOf<Item>()
+        for (i in 1..95) {
+            set.add(Item(i * 32))
+            expected.add(Item(i * 32))
+        }
+
+        for (i in 1..95) {
+            set.remove(Item(i * 32 * 2))
+            expected.remove(Item(i * 32 * 2))
+
+        }
+        val result = mutableListOf<Item>()
+        for (element in set) {
+            result.add(element)
+        }
+        when (set) {
+            is MyLinkedHashSet -> assertEquals(expected, result)
+            is MyHashSet -> assertNotEquals(expected, result)
         }
     }
 }
