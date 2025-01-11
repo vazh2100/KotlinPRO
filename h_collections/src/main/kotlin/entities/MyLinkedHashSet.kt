@@ -18,8 +18,8 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
     private var modCount = 0
 
 
-    override fun iterator(): Iterator<T> {
-        return object : Iterator<T> {
+    override fun iterator(): MutableIterator<T> {
+        return object : MutableIterator<T> {
             private var next = first
             private val capturedModCount = modCount
 
@@ -30,6 +30,10 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
             override fun next(): T {
                 if (capturedModCount != modCount) throw ConcurrentModificationException()
                 return next!!.value.also { next = next?.next }
+            }
+
+            override fun remove() {
+                TODO("Not yet implemented")
             }
 
         }

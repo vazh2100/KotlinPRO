@@ -1,9 +1,10 @@
 package entities
 
 ///Iterable находится на вершине иерархии коллекции
-interface MyMutableCollection<T> : Iterable<T> {
+interface MyMutableCollection<T> : MyCollection<T>, MutableIterable<T> {
 
-    val size: Int
+    override val size: Int
+    override fun contains(element: T): Boolean
 
     fun add(element: T): Boolean
     operator fun plus(element: T) = add(element)
@@ -12,7 +13,4 @@ interface MyMutableCollection<T> : Iterable<T> {
     operator fun minus(element: T) = remove(element)
 
     fun clear()
-
-    fun contains(element: T): Boolean
-
 }

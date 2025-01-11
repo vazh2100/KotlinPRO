@@ -24,8 +24,8 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
     private var modCount = 0
 
 
-    override fun iterator(): Iterator<T> {
-        return object : Iterator<T> {
+    override fun iterator(): MutableIterator<T> {
+        return object : MutableIterator<T> {
             private var index = 0
             private var foundElements = 0
             private var currentNode = elements[index]
@@ -43,6 +43,10 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
                     currentNode = currentNode?.next
                     foundElements++
                 }
+            }
+
+            override fun remove() {
+                TODO("Not yet implemented")
             }
         }
     }

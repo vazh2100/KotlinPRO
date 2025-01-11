@@ -19,7 +19,7 @@ class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableLi
     override var size: Int = 0
         private set
 
-    override fun iterator(): Iterator<T> = ArrayListIterator()
+    override fun iterator(): MutableIterator<T> = ArrayListIterator()
 
 
     override fun add(element: T): Boolean {
@@ -87,7 +87,7 @@ class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableLi
     }
 
 
-    inner class ArrayListIterator<T> : Iterator<T> {
+    inner class ArrayListIterator<T> : MutableIterator<T> {
         private var nextIndex = 0
         private val capturedModCount = modCount
 
@@ -99,6 +99,10 @@ class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableLi
         override fun next(): T {
             if (capturedModCount != modCount) throw ConcurrentModificationException()
             return elements[nextIndex++] as T
+        }
+
+        override fun remove() {
+            TODO("Not yet implemented")
         }
 
     }
