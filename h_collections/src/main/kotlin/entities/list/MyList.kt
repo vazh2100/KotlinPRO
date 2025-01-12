@@ -1,4 +1,6 @@
-package entities
+package entities.list
+
+import entities.collection.MyCollection
 
 interface MyList<T> : MyCollection<T> {
     override val size: Int

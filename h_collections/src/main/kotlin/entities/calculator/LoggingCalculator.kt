@@ -1,4 +1,4 @@
-package entities
+package entities.calculator
 
 class LoggingCalculator : Calculator {
 

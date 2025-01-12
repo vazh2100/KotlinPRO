@@ -1,4 +1,4 @@
-package entities
+package entities.calculator
 
 interface Calculator {
     fun sum(a: Int, b: Int): Int

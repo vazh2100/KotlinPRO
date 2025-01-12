@@ -1,4 +1,4 @@
-package entities
+package entities.list
 
 class MyLinkedList<T> : MyMutableList<T> {
 

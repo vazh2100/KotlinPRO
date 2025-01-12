@@ -1,4 +1,4 @@
-package entities
+package entities.list
 
 // Для простоты реализации, просто используем готовые методы
 class UnmodifiableList<T>(vararg array: T) : MyList<T> {

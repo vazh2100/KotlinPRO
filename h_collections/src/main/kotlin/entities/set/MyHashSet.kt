@@ -1,4 +1,4 @@
-package entities
+package entities.set
 
 
 import kotlin.math.abs
@@ -7,7 +7,7 @@ import kotlin.math.abs
 // не изменится вместимость массива, то есть не перераспределяться элементы по новому массиву
 // В оригинальной коллекции в лучшем случае все операции выполняются за константное время
 // в худшем случае за время от логарифмической зависимости от размера
-class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
+open class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
 
     private companion object {
         const val DEFAULT_CAPACITY = 16
@@ -18,7 +18,7 @@ class MyHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<
     // Ячейки хэш таблицы называют корзинами или buckets
     private var elements = arrayOfNulls<Node<T>>(capacity)
 
-    override var size: Int = 0
+    final override var size: Int = 0
         private set
 
     private var modCount = 0

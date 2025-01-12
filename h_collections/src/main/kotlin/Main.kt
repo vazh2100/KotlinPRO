@@ -2,7 +2,14 @@ import entities.Item
 import java.util.*
 
 
-fun main() {}
+fun main() {
+    val map = hashMapOf(10 to 20, 30 to 40)
+    map.iterator()
+    for (key in map.keys) {
+        map.put(20, 20)
+    }
+
+}
 
 fun theory() {
     //Создают linked hash set
@@ -23,4 +30,13 @@ fun theory() {
 
     //listOf создаёт действительно не изменяемую коллекцию
     (listOf<Int>(1, 2, 3) as MutableList).add(1) // ошибка
+
+    //создаёт HashMap
+    hashMapOf("" to "")
+
+    //создаёт LinkedHashMap
+    mutableMapOf("" to "")
+    //создаёт TreeMap
+    sortedMapOf("" to "")
+
 }

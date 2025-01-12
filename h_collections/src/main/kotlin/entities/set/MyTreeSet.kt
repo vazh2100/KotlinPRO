@@ -1,4 +1,4 @@
-package entities
+package entities.set
 
 class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
 

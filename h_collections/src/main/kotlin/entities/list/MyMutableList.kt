@@ -1,4 +1,6 @@
-package entities
+package entities.list
+
+import entities.collection.MyMutableCollection
 
 interface MyMutableList<T> : MyList<T>, MyMutableCollection<T> {
     override val size: Int

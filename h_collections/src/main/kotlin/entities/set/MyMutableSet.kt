@@ -1,4 +1,6 @@
-package entities
+package entities.set
+
+import entities.collection.MyMutableCollection
 
 interface MyMutableSet<T> : MySet<T>, MyMutableCollection<T> {
     override val size: Int

@@ -1,4 +1,5 @@
-import entities.MyMutableSet
+package entities.set
+
 import kotlin.math.abs
 
 class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
@@ -166,7 +167,7 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
     }
 
     override fun toString(): String {
-        return "MyLinkedHashSet(elements=${elements.contentToString()})"
+        return "entities.set.MyLinkedHashSet(elements=${elements.contentToString()})"
     }
 
 

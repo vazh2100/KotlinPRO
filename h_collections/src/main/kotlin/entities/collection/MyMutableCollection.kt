@@ -1,4 +1,4 @@
-package entities
+package entities.collection
 
 ///Iterable находится на вершине иерархии коллекции
 interface MyMutableCollection<T> : MyCollection<T>, MutableIterable<T> {

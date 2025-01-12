@@ -1,4 +1,4 @@
-package entities
+package entities.list
 
 
 // val a = T() создать экземпляр обобщённого типа нельзя

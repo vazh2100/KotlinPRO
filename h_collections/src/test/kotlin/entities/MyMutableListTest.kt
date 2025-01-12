@@ -1,5 +1,8 @@
 package entities
 
+import entities.list.MyArrayList
+import entities.list.MyLinkedList
+import entities.list.MyMutableList
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest

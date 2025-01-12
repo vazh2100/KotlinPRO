@@ -1,4 +1,4 @@
-package entities
+package entities.collection
 
 
 interface MyCollection<T> : Iterable<T> {

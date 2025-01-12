@@ -1,5 +1,8 @@
 package entities
 
+import entities.calculator.Calculator
+import entities.calculator.LoggingCalculator
+import entities.calculator.SimpleCalculator
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

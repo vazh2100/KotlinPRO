@@ -1,6 +1,8 @@
 package entities
 
-import MyLinkedHashSet
+import entities.set.MyHashSet
+import entities.set.MyLinkedHashSet
+import entities.set.MyMutableSet
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
