@@ -1,7 +1,13 @@
 import entities.Item
 import java.util.*
 
-
+/// Технический долг ( сделать перед переходом к следующему разделу)
+/// Во всех mutable iterator реализовать remove
+/// Реализовать TreeSet с помощью красно-черного дерева
+/// Реализовать LinkedHashMap
+/// Реализовать TreeHashMap
+/// в MyHashMap реализовать три типа итерации с запретом на модификацию
+// HashMap.remove() сделать приватным
 fun main() {
     val map = hashMapOf(10 to 20, 30 to 40)
     map.iterator()
@@ -22,7 +28,7 @@ fun theory() {
 
     //Создаёт TreeSet. Она является изменяемой
     TreeSet<Item>()
-    val tree = sortedSetOf<Item>()
+    sortedSetOf<Item>()
 
     //toList создаёт новую копию, но делает её mutable, поэтому добавление возможно после приведения типов
     (mutableListOf<Int>(1, 2, 3).toList() as MutableList).add(1) // ошибки нет

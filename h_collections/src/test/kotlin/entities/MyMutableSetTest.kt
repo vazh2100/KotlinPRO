@@ -1,6 +1,7 @@
 package entities
 
 import entities.set.MyHashSet
+import entities.set.MyHashSetOld
 import entities.set.MyLinkedHashSet
 import entities.set.MyMutableSet
 import org.junit.jupiter.api.Assertions.*
@@ -12,7 +13,8 @@ class MyMutableSetTest {
     companion object {
         @JvmStatic
         fun source() = listOf(
-            MyHashSet<Item>(),
+            MyHashSet(),
+            MyHashSetOld<Item>(),
             MyLinkedHashSet()
         )
     }
@@ -296,6 +298,7 @@ class MyMutableSetTest {
         }
         when (set) {
             is MyLinkedHashSet -> assertEquals(expected, result)
+            is MyHashSetOld -> assertNotEquals(expected, result)
             is MyHashSet -> assertNotEquals(expected, result)
         }
     }

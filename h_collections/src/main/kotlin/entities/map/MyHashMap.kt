@@ -16,18 +16,21 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
         const val LOAD_FACTOR = 0.75
     }
 
-    // Правильнее называть это хэш таблицей, а не массивом
-    // Ячейки хэш таблицы называют корзинами или buckets
-    private var elements = arrayOfNulls<Node<K, V>>(capacity)
 
     override var size: Int = 0
         private set
 
     override val keys: MySet<K>
-        get() = MyKeySet<K>().apply { foreach { add(it.key) } }
+        get() = MyHashSet<K>().apply { foreach { add(it.key) } }
 
     override val values: MyCollection<V>
         get() = MyArrayList<V>().apply { foreach { add(it.value) } }
+
+    // Правильнее называть это хэш таблицей, а не массивом
+    // Ячейки хэш таблицы называют корзинами или buckets
+    private var elements = arrayOfNulls<Node<K, V>>(capacity)
+    private var modCount = 0
+
 
     override fun get(key: K): V? {
         var current = elements[getElementPosition(key, elements.size)]
@@ -57,6 +60,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
         return put(key, value, elements).also {
             if (it == null) {
                 size++
+                modCount++
             }
         }
     }
@@ -69,6 +73,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
         if (node.key == key) {
             elements[position] = node.next
             size--
+            modCount++
             return node.value
         } else {
             var previous = node
@@ -77,6 +82,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
                 if (current.key == key) {
                     previous.next = current.next
                     size--
+                    modCount++
                     return current.value
                 } else {
                     previous = current
@@ -167,33 +173,30 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
 
     }
 
-    inner class MyKeySet<K> : MyHashSet<K>() {
-        override fun iterator(): MutableIterator<K> {
-            return KeySetIterator()
+    val keyIterator: MutableIterator<K>
+        get() = object : MutableIterator<K> {
+            private var index = 0
+            private var foundElements = 0
+            private var currentNode = elements[index]
+            private val capturedModCount = modCount
+            override fun hasNext(): Boolean {
+                return foundElements < size
+            }
+
+            override fun next(): K {
+                if (capturedModCount != modCount) throw ConcurrentModificationException()
+                while (currentNode == null) {
+                    currentNode = elements[++index]
+                }
+                return currentNode!!.key.also {
+                    currentNode = currentNode?.next
+                    foundElements++
+                }
+            }
+
+            override fun remove() {
+                TODO("Not yet implemented")
+            }
+
         }
-    }
-
-
-    inner class KeySetIterator<K> : MutableIterator<K> {
-        override fun hasNext(): Boolean {
-            TODO("Not yet implemented")
-        }
-
-        override fun next(): K {
-            TODO("Not yet implemented")
-        }
-
-        override fun remove() {
-            TODO("Not yet implemented")
-        }
-
-    }
 }
-
-
-/// Технический долг ( сделать перед переходом к следующему разделу)
-/// Во всех mutable iterator реализовать remove
-/// Реализовать TreeSet с помощью красно-черного дерева
-/// Реализовать LinkedHashMap
-/// Реализовать TreeHashMap
-/// в MyHashMap реализовать три типа итерации с запретом на модификацию
