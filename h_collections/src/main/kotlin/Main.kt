@@ -1,19 +1,23 @@
 import entities.Item
+import entities.map.MyHashMap
 import java.util.*
 
 /// Технический долг ( сделать перед переходом к следующему разделу)
+
 /// Во всех mutable iterator реализовать remove
-/// Реализовать TreeSet с помощью красно-черного дерева
-/// Реализовать LinkedHashMap
-/// Реализовать TreeHashMap
 /// в MyHashMap реализовать три типа итерации с запретом на модификацию
-// HashMap.remove() сделать приватным
+/// Реализовать LinkedHashMap
+/// Реализовать TreeSet с помощью красно-черного дерева
+/// Реализовать TreeHashMap
+/// get и containsKey сделать едиными
+
+
 // переделать containsKey(key: K) используя метод получения
 fun main() {
-    val map = hashMapOf(10 to 20, 30 to 40)
-    map.iterator()
-    for (key in map.keys) {
-        map.put(20, 20)
+    val myMap = MyHashMap<Int, Int>()
+    repeat(10) {
+        val a = myMap.put(0, it * 16)
+        println(a)
     }
 
 }

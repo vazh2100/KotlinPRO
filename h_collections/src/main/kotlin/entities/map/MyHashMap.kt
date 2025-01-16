@@ -42,12 +42,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
     }
 
     override fun containsKey(key: K): Boolean {
-        var current = elements[getElementPosition(key, elements.size)]
-        while (current != null) {
-            if (current.key == key) return true
-            current = current.next
-        }
-        return false
+        return get(key) != null
     }
 
     override fun containsValue(value: V): Boolean {
@@ -59,38 +54,19 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
         if (size >= elements.size * LOAD_FACTOR) increaseCapacity()
         return put(key, value, elements).also {
             if (it == null) {
-                size++
                 modCount++
+                size++
             }
         }
     }
 
-
     override fun remove(key: K): V? {
-        val position = getElementPosition(key, elements.size)
-        val node = elements[position] ?: return null
-
-        if (node.key == key) {
-            elements[position] = node.next
-            size--
-            modCount++
-            return node.value
-        } else {
-            var previous = node
-            var current = node.next
-            while (current != null) {
-                if (current.key == key) {
-                    previous.next = current.next
-                    size--
-                    modCount++
-                    return current.value
-                } else {
-                    previous = current
-                    current = current.next
-                }
+        return remove(key, Unit).also {
+            if (it != null) {
+                modCount++
+                size--
             }
         }
-        return null
     }
 
 
@@ -154,6 +130,30 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
 
         }
     }
+
+    private fun remove(key: K, unit: Unit): V? {
+        val position = getElementPosition(key, elements.size)
+        val node = elements[position] ?: return null
+
+        if (node.key == key) {
+            elements[position] = node.next
+            return node.value
+        } else {
+            var previous = node
+            var current = node.next
+            while (current != null) {
+                if (current.key == key) {
+                    previous.next = current.next
+                    return current.value
+                } else {
+                    previous = current
+                    current = current.next
+                }
+            }
+        }
+        return null
+    }
+
 
     override fun toString(): String {
         return "NumbersHashSet(elements=${elements.contentToString()})"
