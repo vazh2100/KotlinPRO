@@ -302,4 +302,66 @@ class MyMutableSetTest {
             is MyHashSet -> assertNotEquals(expected, result)
         }
     }
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `iterator throws illegal exceptions when remove`(set: MyMutableSet<Item>) {
+        for (i in 0..9) {
+            set.add(Item(i))
+        }
+
+        val iteratorA = set.iterator()
+        assertThrows(IllegalStateException::class.java) {
+            iteratorA.remove()
+        }
+        val iteratorB = set.iterator()
+        assertThrows(IllegalStateException::class.java) {
+            iteratorB.next()
+            iteratorB.remove()
+            iteratorB.remove()
+        }
+
+        val iteratorC = set.iterator()
+        assertThrows(IllegalStateException::class.java) {
+            iteratorC.next()
+            iteratorC.remove()
+            iteratorC.next()
+            iteratorC.remove()
+            iteratorC.remove()
+        }
+
+
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `iterator remove correctly`(set: MyMutableSet<Item>) {
+        for (i in 0..9) {
+            set.add(Item(i * 4))
+        }
+
+        val iterator = set.iterator()
+        val a = iterator.next()
+        iterator.remove()
+        assertFalse(set.contains(a))
+        val b = iterator.next()
+        val c = iterator.next()
+        iterator.remove()
+        assertTrue(set.contains(b))
+        assertFalse(set.contains(c))
+        val d = iterator.next()
+        iterator.remove()
+        assertFalse(set.contains(d))
+        val e = iterator.next()
+        iterator.remove()
+        assertFalse(set.contains(e))
+        val f = iterator.next()
+        val g = iterator.next()
+        iterator.remove()
+        assertTrue(set.contains(f))
+        assertFalse(set.contains(g))
+
+
+    }
 }

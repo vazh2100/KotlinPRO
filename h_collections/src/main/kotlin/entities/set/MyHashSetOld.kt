@@ -7,49 +7,20 @@ import kotlin.math.abs
 // не изменится вместимость массива, то есть не перераспределяться элементы по новому массиву
 // В оригинальной коллекции в лучшем случае все операции выполняются за константное время
 // в худшем случае за время от логарифмической зависимости от размера
-open class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
+class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
 
     private companion object {
         const val DEFAULT_CAPACITY = 16
         const val LOAD_FACTOR = 0.75
     }
 
+    override var size: Int = 0
+        private set
+
     // Правильнее называть это хэш таблицей, а не массивом
     // Ячейки хэш таблицы называют корзинами или buckets
     private var elements = arrayOfNulls<Node<T>>(capacity)
-
-    final override var size: Int = 0
-        private set
-
     private var modCount = 0
-
-
-    override fun iterator(): MutableIterator<T> {
-        return object : MutableIterator<T> {
-            private var index = 0
-            private var foundElements = 0
-            private var currentNode = elements[index]
-            private val capturedModCount = modCount
-            override fun hasNext(): Boolean {
-                return foundElements < size
-            }
-
-            override fun next(): T {
-                if (capturedModCount != modCount) throw ConcurrentModificationException()
-                while (currentNode == null) {
-                    currentNode = elements[++index]
-                }
-                return currentNode!!.value.also {
-                    currentNode = currentNode?.next
-                    foundElements++
-                }
-            }
-
-            override fun remove() {
-                TODO("Not yet implemented")
-            }
-        }
-    }
 
 
     override fun add(element: T): Boolean {
@@ -61,7 +32,6 @@ open class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMut
             }
         }
     }
-
 
     override fun remove(element: T): Boolean {
         val position = getElementPosition(element, elements.size)
@@ -89,7 +59,6 @@ open class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMut
         }
         return false
     }
-
 
     override fun clear() {
         elements = arrayOfNulls(capacity)
@@ -152,7 +121,40 @@ open class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMut
     }
 
 
-    data class Node<T>(
+    override fun iterator(): MutableIterator<T> {
+        return object : MutableIterator<T> {
+            private var index = 0
+            private var foundElements = 0
+            private var currentNode = elements[index]
+            private var nodeToDelete: Node<T>? = null
+            private val capturedModCount = modCount
+            override fun hasNext(): Boolean {
+                return foundElements < size
+            }
+
+            override fun next(): T {
+                if (capturedModCount != modCount) throw ConcurrentModificationException()
+                while (currentNode == null) {
+                    currentNode = elements[++index]
+                }
+                nodeToDelete = currentNode
+                return currentNode!!.value.also {
+                    currentNode = currentNode?.next
+                    foundElements++
+                }
+            }
+
+            override fun remove() {
+                if (nodeToDelete == null) throw IllegalStateException()
+                remove(nodeToDelete!!.value)
+                nodeToDelete = null
+                modCount--
+            }
+        }
+    }
+
+
+    private data class Node<T>(
         val value: T,
     ) {
         var next: Node<T>? = null
