@@ -481,5 +481,64 @@ class MyMutableListTest {
         }
     }
 
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `iterator throws illegal exceptions when remove`(list: MyMutableList<Int>) {
+        for (i in 0..9) {
+            list.add(i)
+        }
+
+        val iteratorA = list.iterator()
+        assertThrows(IllegalStateException::class.java) {
+            iteratorA.remove()
+        }
+        val iteratorB = list.iterator()
+        assertThrows(IllegalStateException::class.java) {
+            iteratorB.next()
+            iteratorB.remove()
+            iteratorB.remove()
+        }
+
+        val iteratorC = list.iterator()
+        assertThrows(IllegalStateException::class.java) {
+            iteratorC.next()
+            iteratorC.remove()
+            iteratorC.next()
+            iteratorC.remove()
+            iteratorC.remove()
+        }
+
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `iterator remove correctly`(list: MyMutableList<Int>) {
+        for (i in 0..9) {
+            list.add(i)
+        }
+
+        val iteratorA = list.iterator()
+        iteratorA.next()
+        iteratorA.remove()
+        assertEquals(1, list[0])
+        iteratorA.next()
+        iteratorA.next()
+        iteratorA.remove()
+        assertEquals(3, list[1])
+        iteratorA.next()
+        iteratorA.remove()
+        assertEquals(4, list[1])
+        iteratorA.next()
+        iteratorA.remove()
+        assertEquals(5, list[1])
+        iteratorA.next()
+        iteratorA.next()
+        iteratorA.remove()
+        assertEquals(7, list[2])
+
+
+    }
+
 
 }

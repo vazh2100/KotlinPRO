@@ -19,8 +19,6 @@ class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableLi
     override var size: Int = 0
         private set
 
-    override fun iterator(): MutableIterator<T> = ArrayListIterator()
-
 
     override fun add(element: T): Boolean {
         increaseCapacityIfNeeded()
@@ -76,6 +74,8 @@ class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableLi
         return false
     }
 
+    override fun iterator(): MutableIterator<T> = ArrayListIterator()
+
     private fun increaseCapacityIfNeeded() {
         if (elements.size == size) {
             elements = elements.copyInto(arrayOfNulls(elements.size * 2), 0)
@@ -86,23 +86,32 @@ class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableLi
         if (index < 0 || index >= size) error("Index out of bound")
     }
 
-
+    // Правило для remove:
+    // remove можно вызывать, только если вызван next
+    // remove можно вызывать, только один раз после next
+    // иначе бросается Illegal State Exception
     inner class ArrayListIterator<T> : MutableIterator<T> {
-        private var nextIndex = 0
+        private var index = 0
+        private var indexToRemove = -1
         private val capturedModCount = modCount
 
         override fun hasNext(): Boolean {
-            return nextIndex < size
+            return index < size
         }
 
         @Suppress("UNCHECKED_CAST")
         override fun next(): T {
             if (capturedModCount != modCount) throw ConcurrentModificationException()
-            return elements[nextIndex++] as T
+            indexToRemove = index
+            return elements[index++] as T
         }
 
         override fun remove() {
-            TODO("Not yet implemented")
+            if (indexToRemove == -1) throw IllegalStateException()
+            removeAt(indexToRemove)
+            index = indexToRemove
+            indexToRemove = -1
+            modCount--
         }
 
     }
