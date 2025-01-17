@@ -178,6 +178,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
             private var index = 0
             private var foundElements = 0
             private var currentNode = elements[index]
+            private var nodeToDelete: Node<K, V>? = null
             private val capturedModCount = modCount
             override fun hasNext(): Boolean {
                 return foundElements < size
@@ -189,13 +190,17 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableM
                     currentNode = elements[++index]
                 }
                 return currentNode!!.key.also {
+                    nodeToDelete = currentNode
                     currentNode = currentNode?.next
                     foundElements++
                 }
             }
 
             override fun remove() {
-                TODO("Not yet implemented")
+                if (nodeToDelete == null) throw IllegalStateException()
+                remove(nodeToDelete!!.key)
+                nodeToDelete = null
+                modCount--
             }
 
         }
