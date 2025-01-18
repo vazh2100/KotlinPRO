@@ -2,9 +2,6 @@ import entities.Item
 import entities.map.MyHashMap
 import java.util.*
 
-/// Технический долг ( сделать перед переходом к следующему разделу)
-
-/// Во всех mutable iterator реализовать remove
 /// в MyHashMap реализовать три типа итерации с запретом на модификацию
 /// Реализовать LinkedHashMap
 /// Реализовать TreeSet с помощью красно-черного дерева

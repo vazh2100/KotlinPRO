@@ -9,36 +9,16 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
         const val LOAD_FACTOR = 0.75
     }
 
-    private var first: Node<T>? = null
-    private var last: Node<T>? = null
-    private var elements = arrayOfNulls<Node<T>>(capacity)
 
     override var size: Int = 0
         private set
 
+
+    private var elements = arrayOfNulls<Node<T>>(capacity)
+    private var first: Node<T>? = null
+    private var last: Node<T>? = null
     private var modCount = 0
 
-
-    override fun iterator(): MutableIterator<T> {
-        return object : MutableIterator<T> {
-            private var next = first
-            private val capturedModCount = modCount
-
-            override fun hasNext(): Boolean {
-                return next != null
-            }
-
-            override fun next(): T {
-                if (capturedModCount != modCount) throw ConcurrentModificationException()
-                return next!!.value.also { next = next?.next }
-            }
-
-            override fun remove() {
-                TODO("Not yet implemented")
-            }
-
-        }
-    }
 
     override fun add(element: T): Boolean {
         if (size >= elements.size * LOAD_FACTOR) increaseCapacity()
@@ -73,6 +53,34 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
             current = current.bucketNext
         }
         return false
+    }
+
+    override fun iterator(): MutableIterator<T> {
+        return object : MutableIterator<T> {
+            private var next = first
+            private var elementToRemove: Node<T>? = null
+            private val capturedModCount = modCount
+
+            override fun hasNext(): Boolean {
+                return next != null
+            }
+
+            override fun next(): T {
+                if (capturedModCount != modCount) throw ConcurrentModificationException()
+                return next!!.value.also {
+                    elementToRemove = next
+                    next = next?.next
+                }
+            }
+
+            override fun remove() {
+                if (elementToRemove == null) throw IllegalStateException()
+                remove(elementToRemove!!.value)
+                elementToRemove = null
+                modCount--
+            }
+
+        }
     }
 
     private fun increaseCapacity() {
