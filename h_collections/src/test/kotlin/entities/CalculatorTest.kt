@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-
 internal class CalculatorTest {
 
     companion object {
@@ -40,7 +39,6 @@ internal class CalculatorTest {
         assertEquals(expected, actual)
     }
 
-
     @ParameterizedTest
     @MethodSource("calculators")
     fun `subtract 10 and 5 is 5`(calculator: Calculator) {
@@ -48,7 +46,6 @@ internal class CalculatorTest {
         val expected = 5
         assertEquals(expected, actual)
     }
-
 
     @ParameterizedTest
     @MethodSource("calculators")
@@ -89,7 +86,6 @@ internal class CalculatorTest {
         val expected = Double.POSITIVE_INFINITY
         assertEquals(expected, actual)
     }
-
 
     @Test
     fun test() {

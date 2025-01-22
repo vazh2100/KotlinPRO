@@ -1,13 +1,13 @@
 package entities.set
 
-
+import entities.collection.MyAbstractCollection
 import kotlin.math.abs
 
-//Если изменить изменяемый объект после того, как мы его положили в хэш таблицу, то мы его не удалим и не найдём, пока
+// Если изменить изменяемый объект после того, как мы его положили в хэш таблицу, то мы его не удалим и не найдём, пока
 // не изменится вместимость массива, то есть не перераспределяться элементы по новому массиву
 // В оригинальной коллекции в лучшем случае все операции выполняются за константное время
 // в худшем случае за время от логарифмической зависимости от размера
-class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
+class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstractCollection<T>(), MyMutableSet<T> {
 
     private companion object {
         const val DEFAULT_CAPACITY = 16
@@ -21,7 +21,6 @@ class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableS
     // Ячейки хэш таблицы называют корзинами или buckets
     private var elements = arrayOfNulls<Node<T>>(capacity)
     private var modCount = 0
-
 
     override fun add(element: T): Boolean {
         if (size >= elements.size * LOAD_FACTOR) increaseCapacity()
@@ -92,6 +91,7 @@ class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableS
         elements = newArray
     }
 
+    @Suppress("NestedBlockDepth")
     private fun add(element: T, array: Array<Node<T>?>): Boolean {
         val newElement = Node(element)
         val position = getElementPosition(element, array.size)
@@ -102,8 +102,9 @@ class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableS
         } else {
             var current = currentElement
             while (true) {
-                if (current?.value == element) return false
-                else {
+                if (current?.value == element) {
+                    return false
+                } else {
                     if (current?.next == null) {
                         current?.next = newElement
                         return true
@@ -112,14 +113,8 @@ class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableS
                     }
                 }
             }
-
         }
     }
-
-    override fun toString(): String {
-        return "NumbersHashSet(elements=${elements.contentToString()})"
-    }
-
 
     override fun iterator(): MutableIterator<T> {
         return object : MutableIterator<T> {
@@ -145,14 +140,13 @@ class MyHashSetOld<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableS
             }
 
             override fun remove() {
-                if (nodeToDelete == null) throw IllegalStateException()
+                if (nodeToDelete == null) error("")
                 remove(nodeToDelete!!.value)
                 nodeToDelete = null
                 modCount--
             }
         }
     }
-
 
     private data class Node<T>(
         val value: T,

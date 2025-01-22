@@ -14,7 +14,6 @@ class MyMutableMapTest {
         )
     }
 
-
     /**
      * Когда добавляем того чего нет, размер увеличивается. Коллекция содержит новый элемент и все другие элементы
      * Когда добавляем то, что есть, размер не увеличивается. Коллекция осталась неизменной и содержит элемент.
@@ -45,7 +44,6 @@ class MyMutableMapTest {
         assertTrue(map.containsValue(keyValue))
         repeat(6) { assertTrue(map.containsKey(it * 16)) }
         repeat(6) { assertTrue(map.containsValue(it * 16)) }
-
     }
 
     @ParameterizedTest
@@ -62,10 +60,8 @@ class MyMutableMapTest {
         repeat(6) { assertTrue(map.containsKey(it)) }
         repeat(6) {
             if (it == key) return@repeat
-            println(it)
             assertTrue(map.containsValue(it))
         }
-
     }
 
     @ParameterizedTest
@@ -82,7 +78,6 @@ class MyMutableMapTest {
         repeat(6) { assertTrue(map.containsKey(it * 16)) }
         repeat(6) {
             if (it * 16 == key) return@repeat
-            println(it)
             assertTrue(map.containsValue(it * 16))
         }
     }
@@ -90,7 +85,6 @@ class MyMutableMapTest {
     @ParameterizedTest
     @MethodSource("source")
     fun `When put key that not exist and load factor more 0 75 and no collision`(map: MyMutableMap<Int, Int>) {
-
         repeat(12) { map.put(it, it) }
         val keyValue = 14
         map.put(keyValue, keyValue)
@@ -117,7 +111,6 @@ class MyMutableMapTest {
     @ParameterizedTest
     @MethodSource("source")
     fun `When put key that exist and load factor more 0 75 and no collision`(map: MyMutableMap<Int, Int>) {
-
         repeat(12) { map.put(it, it) }
         val key = 5
         val value = 100
@@ -148,7 +141,6 @@ class MyMutableMapTest {
         repeat(12) { assertTrue(map.containsKey(it * 32)) }
         repeat(12) {
             if (it * 32 == key) return@repeat
-            println(it)
             assertTrue(map.containsValue(it * 32))
         }
     }
@@ -227,7 +219,6 @@ class MyMutableMapTest {
         }
     }
 
-
     @ParameterizedTest
     @MethodSource("source")
     fun `When remove single key that not exist`(map: MyMutableMap<Int, Int>) {
@@ -302,7 +293,7 @@ class MyMutableMapTest {
 
     @ParameterizedTest
     @MethodSource("source")
-    fun `when modify while iterating then throws`(map: MyMutableMap<Int, Int>) {
+    fun `when modify map while iterating then throws`(map: MyMutableMap<Int, Int>) {
         for (i in 0..9) {
             map.put(i, i)
         }
@@ -321,8 +312,67 @@ class MyMutableMapTest {
                 map.remove(40)
             }
         }
+
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (key in map.values) {
+                map.put(21, 21)
+            }
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (key in map.values) {
+                map.remove(21)
+            }
+        }
+        assertDoesNotThrow {
+            for (key in map.values) {
+                map.remove(40)
+            }
+        }
+
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (key in map.entries) {
+                map.put(22, 22)
+            }
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (key in map.entries) {
+                map.remove(22)
+            }
+        }
+        assertDoesNotThrow {
+            for (key in map.entries) {
+                map.remove(40)
+            }
+        }
     }
 
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `when modify subCollections while iterating then throws`(map: MyMutableMap<Int, Int>) {
+        for (i in 0..9) {
+            map.put(i, i)
+        }
+
+        val keys = map.keys
+        val values = map.values
+        val entries = map.entries
+
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (key in keys) {
+                keys.remove(key)
+            }
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (value in values) {
+                values.remove(5)
+            }
+        }
+        assertThrows(ConcurrentModificationException::class.java) {
+            for (entry in entries) {
+                entries.remove(entry)
+            }
+        }
+    }
 
     @ParameterizedTest
     @MethodSource("source")

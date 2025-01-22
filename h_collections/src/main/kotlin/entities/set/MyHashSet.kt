@@ -1,13 +1,13 @@
 package entities.set
 
-
+import entities.collection.MyAbstractCollection
 import entities.map.MyHashMap
 
-//Если изменить изменяемый объект после того, как мы его положили в хэш таблицу, то мы его не удалим и не найдём, пока
+// Если изменить изменяемый объект после того, как мы его положили в хэш таблицу, то мы его не удалим и не найдём, пока
 // не изменится вместимость массива, то есть не перераспределяться элементы по новому массиву
 // В оригинальной коллекции в лучшем случае все операции выполняются за константное время
 // в худшем случае за время от логарифмической зависимости от размера
-class MyHashSet<T>(capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
+class MyHashSet<T>(capacity: Int = DEFAULT_CAPACITY) : MyAbstractCollection<T>(), MyMutableSet<T> {
 
     private companion object {
         const val DEFAULT_CAPACITY = 16
@@ -26,6 +26,5 @@ class MyHashSet<T>(capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
 
     override fun clear() = map.clear()
 
-    override fun iterator() = map.keyIterator
-
+    override fun iterator() = map.keys.iterator()
 }

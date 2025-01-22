@@ -8,7 +8,6 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-
 class MyMutableListTest {
 
     companion object {
@@ -78,7 +77,6 @@ class MyMutableListTest {
         assertEquals(expected, result)
     }
 
-
     @ParameterizedTest
     @MethodSource("source")
     fun `when remove 50th element then size is 99`(list: MyMutableList<Int>) {
@@ -93,7 +91,6 @@ class MyMutableListTest {
         val expected2 = 51
         assertEquals(expected2, result)
     }
-
 
     @ParameterizedTest
     @MethodSource("source")
@@ -199,13 +196,11 @@ class MyMutableListTest {
         }
         val index = 5
 
-
         list.insert(index, 77)
         println(list)
         val result1 = list.size
         val expected1 = 6
         assertEquals(expected1, result1)
-
 
         val result2 = list.get(index)
         val expected2 = 77
@@ -244,7 +239,6 @@ class MyMutableListTest {
         val result2 = list.get(index)
         val expected2 = 77
         assertEquals(expected2, result2)
-
 
         val result3 = list.get(index + 1)
         val expected3 = index
@@ -313,8 +307,6 @@ class MyMutableListTest {
         }
         val index = 9
 
-
-
         list.insert(index, 77)
         println(list)
         val result1 = list.size
@@ -342,13 +334,11 @@ class MyMutableListTest {
         }
         val index = 10
 
-
         list.insert(index, 77)
         println(list)
         val result1 = list.size
         val expected1 = 11
         assertEquals(expected1, result1)
-
 
         val result2 = list.get(index)
         val expected2 = 77
@@ -507,8 +497,6 @@ class MyMutableListTest {
             iteratorC.remove()
             iteratorC.remove()
         }
-
-
     }
 
     @ParameterizedTest
@@ -536,9 +524,5 @@ class MyMutableListTest {
         iteratorA.next()
         iteratorA.remove()
         assertEquals(7, list[2])
-
-
     }
-
-
 }

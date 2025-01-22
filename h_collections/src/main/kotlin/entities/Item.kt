@@ -19,7 +19,6 @@ class Item(var number: Int) : Comparable<Item> {
         return "$number"
     }
 
-
     // если текущий больше, чем other, то 1
     // если текущий равен other, то 0
     // если текущий меньше, чем other, то -1

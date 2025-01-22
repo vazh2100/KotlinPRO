@@ -1,8 +1,7 @@
 package entities.collection
 
-
-interface MyCollection<T> : Iterable<T> {
+interface MyCollection<out T> : Iterable<T> {
     val size: Int
 
-    fun contains(element: T): Boolean
+    fun contains(element: @UnsafeVariance T): Boolean
 }

@@ -1,6 +1,9 @@
 package entities.list
 
-class MyLinkedList<T> : MyMutableList<T> {
+import entities.collection.MyAbstractCollection
+
+@Suppress("TooManyFunctions")
+class MyLinkedList<T> : MyAbstractCollection<T>(), MyMutableList<T> {
 
     private var first: Node<T>? = null
     private var last: Node<T>? = null
@@ -9,7 +12,6 @@ class MyLinkedList<T> : MyMutableList<T> {
         private set
 
     private var modCount = 0
-
 
     override fun iterator(): MutableIterator<T> {
         return object : MutableIterator<T> {
@@ -30,12 +32,11 @@ class MyLinkedList<T> : MyMutableList<T> {
             }
 
             override fun remove() {
-                if (elementToRemove == null) throw IllegalStateException()
+                if (elementToRemove == null) error("")
                 elementToRemove?.unlink()
                 elementToRemove = null
                 modCount--
             }
-
         }
     }
 
@@ -43,7 +44,6 @@ class MyLinkedList<T> : MyMutableList<T> {
         Node(element).link(last, null)
         return true
     }
-
 
     override fun insert(index: Int, element: T) {
         when (index) {
@@ -81,7 +81,6 @@ class MyLinkedList<T> : MyMutableList<T> {
         return false
     }
 
-
     override fun clear() {
         first = null
         last = null
@@ -99,17 +98,6 @@ class MyLinkedList<T> : MyMutableList<T> {
             }
         }
         return false
-    }
-
-    override fun toString(): String {
-        return buildString {
-            var current = first
-            while (current != null) {
-                append(current.value)
-                append(", ")
-                current = current.next
-            }
-        }
     }
 
     private fun checkIndex(index: Int) {
@@ -132,7 +120,6 @@ class MyLinkedList<T> : MyMutableList<T> {
             }
             return node!!
         }
-
     }
 
     private fun Node<T>.unlink() {
@@ -164,7 +151,6 @@ class MyLinkedList<T> : MyMutableList<T> {
         size++
         modCount++
     }
-
 
     class Node<T>(
         val value: T

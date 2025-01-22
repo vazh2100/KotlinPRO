@@ -2,9 +2,7 @@ package entities.set
 
 class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
 
-
     private var root: Node<T>? = null
-
 
     override fun iterator(): MutableIterator<T> {
         TODO("Not yet implemented")
@@ -12,6 +10,7 @@ class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
 
     override val size: Int = 0
 
+    @Suppress("NestedBlockDepth")
     override fun add(element: T): Boolean {
         val newElement = Node(element)
         if (root == null) {
@@ -69,7 +68,6 @@ class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
 //        printTree(root.rightChild, indent + if (isRight) "    " else "│   ", true)
 //    }
 
-
     class Node<T>(val value: T) {
         var parent: Node<T>? = null
         var leftChild: Node<T>? = null
@@ -109,6 +107,7 @@ class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
             return levels.sumOf { it.size } * 2 + 1 to levels
         }
 
+        @Suppress("NestedBlockDepth")
         fun printNode() {
             val (size, levels) = sizeAndLevels()
             // создаём полотно
@@ -126,7 +125,6 @@ class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
                     level[0].index = size / 2
                 }
                 for (node in level) {
-
                     node.leftChild?.let {
                         // устанавливаем начало левому ребёнку
                         it.begin = node.begin
@@ -135,10 +133,12 @@ class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
                         it.index = it.begin + leftSize / 2
                         // рисуем левое плечо
                         for (i in it.index..<node.index) {
-                            if (i == it.index) canvas[index].replace(i, i + 1, "┌")
-                            else canvas[index].replace(i, i + 1, "─")
+                            if (i == it.index) {
+                                canvas[index].replace(i, i + 1, "┌")
+                            } else {
+                                canvas[index].replace(i, i + 1, "─")
+                            }
                         }
-
 
                         node.rightChild?.let { rc ->
                             // устанавливаем начало правому ребёнку
@@ -149,11 +149,12 @@ class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
 
                             // рисуем правое плечо
                             for (i in node.index + 1..rc.index) {
-                                if (i == rc.index) canvas[index].replace(i, i + 1, "┐")
-                                else canvas[index].replace(i, i + 1, "─")
+                                if (i == rc.index) {
+                                    canvas[index].replace(i, i + 1, "┐")
+                                } else {
+                                    canvas[index].replace(i, i + 1, "─")
+                                }
                             }
-
-
                         }
                     }
                     if (node.leftChild == null) {
@@ -165,20 +166,20 @@ class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
                             it.index = it.begin + rightHalfSize
                             // рисуем правое плечо
                             for (i in node.index + 1..it.index) {
-                                if (i == it.index) canvas[index].replace(i, i + 1, "┐")
-                                else canvas[index].replace(i, i + 1, "─")
+                                if (i == it.index) {
+                                    canvas[index].replace(i, i + 1, "┐")
+                                } else {
+                                    canvas[index].replace(i, i + 1, "─")
+                                }
                             }
                         }
-
                     }
 
-                    //рисуем нод на его позиции
+                    // рисуем нод на его позиции
                     canvas[index].replace(node.index, node.index + 1, node.value.toString())
                 }
-
             }
             canvas.forEach(::println)
         }
-
     }
 }

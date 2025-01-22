@@ -19,7 +19,6 @@ class MyMutableSetTest {
         )
     }
 
-
     /**
      * Когда добавляем того чего нет, размер увеличивается. Коллекция содержит новый элемент и все другие элементы
      * Когда добавляем то, что есть, размер не увеличивается. Коллекция осталась неизменной и содержит элемент.
@@ -187,7 +186,6 @@ class MyMutableSetTest {
         }
     }
 
-
     @ParameterizedTest
     @MethodSource("source")
     fun `When remove single element that not exist`(set: MyMutableSet<Item>) {
@@ -277,7 +275,6 @@ class MyMutableSetTest {
         }
     }
 
-
     @ParameterizedTest
     @MethodSource("source")
     fun `when iterating the order is correct`(set: MyMutableSet<Item>) {
@@ -290,7 +287,6 @@ class MyMutableSetTest {
         for (i in 1..95) {
             set.remove(Item(i * 32 * 2))
             expected.remove(Item(i * 32 * 2))
-
         }
         val result = mutableListOf<Item>()
         for (element in set) {
@@ -329,10 +325,7 @@ class MyMutableSetTest {
             iteratorC.remove()
             iteratorC.remove()
         }
-
-
     }
-
 
     @ParameterizedTest
     @MethodSource("source")
@@ -361,7 +354,5 @@ class MyMutableSetTest {
         iterator.remove()
         assertTrue(set.contains(f))
         assertFalse(set.contains(g))
-
-
     }
 }

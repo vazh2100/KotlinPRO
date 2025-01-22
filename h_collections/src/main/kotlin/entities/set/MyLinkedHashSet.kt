@@ -1,24 +1,23 @@
 package entities.set
 
+import entities.collection.MyAbstractCollection
 import kotlin.math.abs
 
-class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableSet<T> {
+@Suppress("TooManyFunctions")
+class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstractCollection<T>(), MyMutableSet<T> {
 
     private companion object {
         const val DEFAULT_CAPACITY = 16
         const val LOAD_FACTOR = 0.75
     }
 
-
     override var size: Int = 0
         private set
-
 
     private var elements = arrayOfNulls<Node<T>>(capacity)
     private var first: Node<T>? = null
     private var last: Node<T>? = null
     private var modCount = 0
-
 
     override fun add(element: T): Boolean {
         if (size >= elements.size * LOAD_FACTOR) increaseCapacity()
@@ -37,7 +36,6 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
                 modCount++
             }
         }
-
     }
 
     override fun clear() {
@@ -74,12 +72,11 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
             }
 
             override fun remove() {
-                if (elementToRemove == null) throw IllegalStateException()
+                if (elementToRemove == null) error("")
                 remove(elementToRemove!!.value)
                 elementToRemove = null
                 modCount--
             }
-
         }
     }
 
@@ -93,6 +90,7 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
         elements = newArray
     }
 
+    @Suppress("NestedBlockDepth")
     private fun add(element: T, array: Array<Node<T>?>): Boolean {
         val newElement = Node(element)
         val position = getElementPosition(element, array.size)
@@ -104,8 +102,9 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
         } else {
             var current = currentElement
             while (true) {
-                if (current?.value == element) return false
-                else {
+                if (current?.value == element) {
+                    return false
+                } else {
                     if (current?.bucketNext == null) {
                         current?.bucketNext = newElement
                         newElement.link(last, null)
@@ -115,7 +114,6 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
                     }
                 }
             }
-
         }
     }
 
@@ -174,11 +172,6 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
         }
     }
 
-    override fun toString(): String {
-        return "entities.set.MyLinkedHashSet(elements=${elements.contentToString()})"
-    }
-
-
     class Node<T>(
         val value: T,
     ) {
@@ -187,7 +180,7 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutab
         var next: Node<T>? = null
 
         override fun toString(): String {
-            return "Node(value=$value, previous=${previous?.value}, next=${next?.value}, bucketNext=${bucketNext})"
+            return "Node(value=$value, previous=${previous?.value}, next=${next?.value}, bucketNext=$bucketNext)"
         }
     }
 }

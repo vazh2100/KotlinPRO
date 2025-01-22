@@ -1,24 +1,23 @@
 package entities.list
 
+import entities.collection.MyAbstractCollection
 
 // val a = T() создать экземпляр обобщённого типа нельзя
 // arrayOfNulls<T>(capacity) - нельзя создать массив объектов обобщенного типа, так как нужно знать, сколько памяти
 // занимает тип
-class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableList<T> {
+class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstractCollection<T>(), MyMutableList<T> {
 
     private companion object {
         const val DEFAULT_CAPACITY = 10
     }
 
-    private var elements = arrayOfNulls<Any>(capacity)// выделяет в памяти 4*10 байт c 10 ячейками null
+    private var elements = arrayOfNulls<Any>(capacity) // выделяет в памяти 4*10 байт c 10 ячейками null
 
     //    private val array = IntArray(10) // выделяет в памяти 4*10 байт c 10 ячейками 0
     private var modCount = 0
 
-
     override var size: Int = 0
         private set
-
 
     override fun add(element: T): Boolean {
         increaseCapacityIfNeeded()
@@ -107,12 +106,11 @@ class MyArrayList<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyMutableLi
         }
 
         override fun remove() {
-            if (indexToRemove == -1) throw IllegalStateException()
+            if (indexToRemove == -1) error("")
             removeAt(indexToRemove)
             index = indexToRemove
             indexToRemove = -1
             modCount--
         }
-
     }
 }

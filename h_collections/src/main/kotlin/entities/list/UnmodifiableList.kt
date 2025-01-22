@@ -13,5 +13,4 @@ class UnmodifiableList<T>(vararg array: T) : MyList<T> {
     override fun contains(element: T): Boolean = elements.contains(element)
 
     override fun iterator(): Iterator<T> = elements.iterator()
-
 }
