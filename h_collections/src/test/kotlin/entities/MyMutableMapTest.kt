@@ -1,16 +1,19 @@
 package entities
 
 import entities.map.MyHashMap
+import entities.map.MyLinkedHashMap
 import entities.map.MyMutableMap
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+@Suppress("LargeClass")
 class MyMutableMapTest {
     companion object {
         @JvmStatic
         fun source() = listOf(
             MyHashMap<Int, Int>(),
+            MyLinkedHashMap<Int, Int>(),
         )
     }
 
@@ -122,7 +125,6 @@ class MyMutableMapTest {
         repeat(12) { assertTrue(map.containsKey(it)) }
         repeat(12) {
             if (it == key) return@repeat
-            println(it)
             assertTrue(map.containsValue(it))
         }
     }
@@ -392,8 +394,36 @@ class MyMutableMapTest {
             result.add(key)
         }
         when (map) {
-//            is MyLinkedHashSet -> assertEquals(expected, result)
-            is MyMutableMap -> assertNotEquals(expected, result)
+            is MyLinkedHashMap -> assertEquals(expected, result)
+            is MyHashMap -> assertNotEquals(expected, result)
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("source")
+    fun `iterator remove correctly`(map: MyMutableMap<Int, Int>) {
+        for (i in 0..9) {
+            map.put(i * 4, i * 4)
+        }
+        val iterator = map.entries.iterator()
+        val a = iterator.next()
+        iterator.remove()
+        assertFalse(map.containsKey(a.key))
+        val b = iterator.next()
+        val c = iterator.next()
+        iterator.remove()
+        assertTrue(map.containsKey(b.key))
+        assertFalse(map.containsKey(c.key))
+        val d = iterator.next()
+        iterator.remove()
+        assertFalse(map.containsKey(d.key))
+        val e = iterator.next()
+        iterator.remove()
+        assertFalse(map.containsKey(e.key))
+        val f = iterator.next()
+        val g = iterator.next()
+        iterator.remove()
+        assertTrue(map.containsKey(f.key))
+        assertFalse(map.containsKey(g.key))
     }
 }

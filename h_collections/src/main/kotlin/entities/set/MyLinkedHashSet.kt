@@ -40,6 +40,8 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstr
 
     override fun clear() {
         elements = arrayOfNulls(capacity)
+        first = null
+        last = null
         size = 0
         modCount++
     }
@@ -53,31 +55,8 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstr
         return false
     }
 
-    override fun iterator(): MutableIterator<T> {
-        return object : MutableIterator<T> {
-            private var next = first
-            private var elementToRemove: Node<T>? = null
-            private val capturedModCount = modCount
-
-            override fun hasNext(): Boolean {
-                return next != null
-            }
-
-            override fun next(): T {
-                if (capturedModCount != modCount) throw ConcurrentModificationException()
-                return next!!.value.also {
-                    elementToRemove = next
-                    next = next?.next
-                }
-            }
-
-            override fun remove() {
-                if (elementToRemove == null) error("")
-                remove(elementToRemove!!.value)
-                elementToRemove = null
-                modCount--
-            }
-        }
+    private fun getElementPosition(element: T, size: Int): Int {
+        return abs(element.hashCode() % size)
     }
 
     private fun increaseCapacity() {
@@ -117,10 +96,6 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstr
         }
     }
 
-    private fun getElementPosition(element: T, size: Int): Int {
-        return abs(element.hashCode() % size)
-    }
-
     private fun tryRemove(element: T): Boolean {
         val position = getElementPosition(element, elements.size)
         val node = elements[position] ?: return false
@@ -146,6 +121,19 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstr
         return false
     }
 
+    private fun Node<T>.link(previous: Node<T>?, next: Node<T>?) {
+        this.previous = previous
+        this.next = next
+        previous?.next = this
+        next?.previous = this
+        if (previous == null) {
+            first = this
+        }
+        if (next == null) {
+            last = this
+        }
+    }
+
     private fun Node<T>.unlink() {
         val previous = this.previous
         val next = this.next
@@ -159,16 +147,30 @@ class MyLinkedHashSet<T>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstr
         }
     }
 
-    private fun Node<T>.link(previous: Node<T>?, next: Node<T>?) {
-        this.previous = previous
-        this.next = next
-        previous?.next = this
-        next?.previous = this
-        if (previous == null) {
-            first = this
-        }
-        if (next == null) {
-            last = this
+    override fun iterator(): MutableIterator<T> {
+        return object : MutableIterator<T> {
+            private var next = first
+            private var elementToRemove: Node<T>? = null
+            private val capturedModCount = modCount
+
+            override fun hasNext(): Boolean {
+                return next != null
+            }
+
+            override fun next(): T {
+                if (capturedModCount != modCount) throw ConcurrentModificationException()
+                return next!!.value.also {
+                    elementToRemove = next
+                    next = next?.next
+                }
+            }
+
+            override fun remove() {
+                if (elementToRemove == null) error("")
+                remove(elementToRemove!!.value)
+                elementToRemove = null
+                modCount--
+            }
         }
     }
 
