@@ -1,13 +1,11 @@
 package entities
 
-import entities.set.MyHashSet
-import entities.set.MyHashSetOld
-import entities.set.MyLinkedHashSet
-import entities.set.MyMutableSet
+import entities.set.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+@Suppress("LargeClass")
 class MyMutableSetTest {
 
     companion object {
@@ -15,6 +13,7 @@ class MyMutableSetTest {
         fun source() = listOf(
             MyHashSet(),
             MyHashSetOld<Item>(),
+            MyLinkedHashSetOld(),
             MyLinkedHashSet()
         )
     }
@@ -293,6 +292,7 @@ class MyMutableSetTest {
             result.add(element)
         }
         when (set) {
+            is MyLinkedHashSetOld -> assertEquals(expected, result)
             is MyLinkedHashSet -> assertEquals(expected, result)
             is MyHashSetOld -> assertNotEquals(expected, result)
             is MyHashSet -> assertNotEquals(expected, result)

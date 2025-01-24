@@ -20,11 +20,14 @@ class MyLinkedHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAb
     override val values: MyMutableCollection<V> by lazy { Values() }
     override val entries: MyMutableSet<MyMutableMap.MyMutableEntry<K, V>> by lazy { EntrySet() }
 
+    var first: MyMutableMap.MyMutableEntry<K, V>? = null
+        private set
+    var last: MyMutableMap.MyMutableEntry<K, V>? = null
+        private set
+
     // Правильнее называть это хэш таблицей, а не массивом
     // Ячейки хэш таблицы называют корзинами или buckets
     private var elements = arrayOfNulls<Node<K, V>>(capacity)
-    private var first: Node<K, V>? = null
-    private var last: Node<K, V>? = null
     private var modCount = 0
 
     override fun get(key: K): V? {
@@ -143,8 +146,8 @@ class MyLinkedHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAb
         return null
     }
 
-    private fun Node<K, V>.link(previous: Node<K, V>?, next: Node<K, V>?) {
-        this.previous = previous
+    private fun Node<K, V>.link(previous: MyMutableMap.MyMutableEntry<K, V>?, next: Node<K, V>?) {
+        this.previous = previous as Node?
         this.next = next
         previous?.next = this
         next?.previous = this
@@ -169,7 +172,7 @@ class MyLinkedHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAb
         }
     }
 
-    data class Node<K, V>(
+    private data class Node<K, V>(
         override val key: K,
         override var value: V
     ) : MyMutableMap.MyMutableEntry<K, V> {
@@ -187,7 +190,7 @@ class MyLinkedHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAb
         }
     }
 
-    inner class KeySet : MyAbstractCollection<K>(), MyMutableSet<K> {
+    private inner class KeySet : MyAbstractCollection<K>(), MyMutableSet<K> {
         override val size: Int
             get() = this@MyLinkedHashMap.size
 
@@ -202,8 +205,7 @@ class MyLinkedHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAb
         override fun add(element: K): Boolean = throw UnsupportedOperationException()
     }
 
-    inner class Values : MyAbstractCollection<V>(), MyMutableCollection<V> {
-
+    private inner class Values : MyAbstractCollection<V>(), MyMutableCollection<V> {
         override val size: Int
             get() = this@MyLinkedHashMap.size
 
@@ -225,7 +227,7 @@ class MyLinkedHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAb
         }
     }
 
-    inner class EntrySet :
+    private inner class EntrySet :
         MyAbstractCollection<MyMutableMap.MyMutableEntry<K, V>>(),
         MyMutableSet<MyMutableMap.MyMutableEntry<K, V>> {
 
@@ -245,8 +247,8 @@ class MyLinkedHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAb
         override fun iterator(): MutableIterator<MyMutableMap.MyMutableEntry<K, V>> = EntryIterator()
     }
 
-    abstract inner class NodeIterator {
-        private var next = first
+    private abstract inner class NodeIterator {
+        private var next = first as Node?
         private var nodeToRemove: Node<K, V>? = null
         private val capturedModCount = modCount
 
@@ -270,15 +272,15 @@ class MyLinkedHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAb
         }
     }
 
-    inner class KeyIterator : NodeIterator(), MutableIterator<K> {
+    private inner class KeyIterator : NodeIterator(), MutableIterator<K> {
         override fun next(): K = nextNode().key
     }
 
-    inner class ValueIterator : NodeIterator(), MutableIterator<V> {
+    private inner class ValueIterator : NodeIterator(), MutableIterator<V> {
         override fun next(): V = nextNode().value
     }
 
-    inner class EntryIterator : NodeIterator(), MutableIterator<Node<K, V>> {
+    private inner class EntryIterator : NodeIterator(), MutableIterator<Node<K, V>> {
         override fun next(): Node<K, V> = nextNode()
     }
 }

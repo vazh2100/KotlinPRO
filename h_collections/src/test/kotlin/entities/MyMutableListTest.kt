@@ -8,6 +8,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+@Suppress("LargeClass")
 class MyMutableListTest {
 
     companion object {

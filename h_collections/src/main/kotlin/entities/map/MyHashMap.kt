@@ -136,7 +136,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstract
         return null
     }
 
-    data class Node<K, V>(
+    private data class Node<K, V>(
         override val key: K,
         override var value: V
     ) : MyMutableMap.MyMutableEntry<K, V> {
@@ -152,7 +152,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstract
         }
     }
 
-    inner class KeySet : MyAbstractCollection<K>(), MyMutableSet<K> {
+    private inner class KeySet : MyAbstractCollection<K>(), MyMutableSet<K> {
         override val size: Int
             get() = this@MyHashMap.size
 
@@ -167,7 +167,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstract
         override fun add(element: K): Boolean = throw UnsupportedOperationException()
     }
 
-    inner class Values : MyAbstractCollection<V>(), MyMutableCollection<V> {
+    private inner class Values : MyAbstractCollection<V>(), MyMutableCollection<V> {
 
         override val size: Int
             get() = this@MyHashMap.size
@@ -190,7 +190,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstract
         }
     }
 
-    inner class EntrySet :
+    private inner class EntrySet :
         MyAbstractCollection<MyMutableMap.MyMutableEntry<K, V>>(),
         MyMutableSet<MyMutableMap.MyMutableEntry<K, V>> {
 
@@ -210,7 +210,7 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstract
         override fun iterator(): MutableIterator<MyMutableMap.MyMutableEntry<K, V>> = EntryIterator()
     }
 
-    abstract inner class NodeIterator {
+    private abstract inner class NodeIterator {
         private var index = 0
         private var foundElements = 0
         private var currentNode = elements[index]
@@ -240,15 +240,15 @@ class MyHashMap<K, V>(private val capacity: Int = DEFAULT_CAPACITY) : MyAbstract
         }
     }
 
-    inner class KeyIterator : NodeIterator(), MutableIterator<K> {
+    private inner class KeyIterator : NodeIterator(), MutableIterator<K> {
         override fun next(): K = nextNode().key
     }
 
-    inner class ValueIterator : NodeIterator(), MutableIterator<V> {
+    private inner class ValueIterator : NodeIterator(), MutableIterator<V> {
         override fun next(): V = nextNode().value
     }
 
-    inner class EntryIterator : NodeIterator(), MutableIterator<Node<K, V>> {
+    private inner class EntryIterator : NodeIterator(), MutableIterator<Node<K, V>> {
         override fun next(): Node<K, V> = nextNode()
     }
 }
