@@ -2,8 +2,8 @@ package entities.list
 
 import entities.collection.MyCollection
 
-interface MyList<T> : MyCollection<T> {
+interface MyList<out T> : MyCollection<T> {
     override val size: Int
-    override fun contains(element: T): Boolean
+    override fun contains(element: @UnsafeVariance T): Boolean
     operator fun get(index: Int): T
 }

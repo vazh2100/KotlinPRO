@@ -2,7 +2,6 @@ package entities.set
 
 import entities.PrintableTreeNode
 
-
 // реализовать итератор
 // реализовать добавление элемента
 // реализовать уделаение элемента
@@ -65,11 +64,9 @@ class MyTreeSet<T : Comparable<T>> : MyMutableSet<T> {
         root?.printNode()
     }
 
-
     class Node<T>(override val value: T) : PrintableTreeNode<T>() {
         var parent: Node<T>? = null
         override var leftChild: Node<T>? = null
         override var rightChild: Node<T>? = null
-
     }
 }
