@@ -2,14 +2,11 @@ import entities.Item
 import entities.map.MyLinkedHashMap
 import java.util.*
 
-// Сделать LinkedHashSetNew.
+
 // Реализовать TreeSet с помощью красно-черного дерева.
 // Реализовать TreeHashMap
-// get и containsKey сделать едиными
 // реализовать не модифицируемые версии всех коллекций
 // реализовать все функции быстрого создания
-
-// переделать containsKey(key: K) используя метод получения
 fun main() {
     val hashMap = MyLinkedHashMap<Int, Int>().apply {
         put(0, 10)
