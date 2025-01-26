@@ -49,3 +49,15 @@ fun <T> copy(src: Container<T>, dst: Container<in T>) {
 // out - producer, отдаёт данные наружу
 // in - consumer, может только принимать данные
 // producer - extends, consumer - super
+
+
+// Обобщённые типы придуманы для программистов
+// В момент работы программы обобщённых типов не существует
+// После компиляции обобщённый тип приводится к типу Object(=Any) и в определённый местах программы
+// согласно исходному коду производится downcast
+// Разницы между использованием val: Any? и val:T? для компилятора нет
+// Поэтому следующий код помечен ошибкой: Cannot check for instance of erased type: Container<Int>
+// В момент компиляции произошло стирание типов
+// fun <T> container(container: Container<T>) {
+//     if (container is Container<Int>)
+// }
