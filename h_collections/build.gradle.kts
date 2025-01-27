@@ -31,8 +31,7 @@ extensions.configure<DetektExtension> {
     buildUponDefaultConfig = true
     parallel = true
     allRules = false
-//        config.setFrom("$rootDir/config/detekt.yaml")
-//        baseline = file("$rootDir/config/baseline.xml")
+    config.setFrom("$rootDir/config/detekt.yaml")
 }
 
 tasks.withType<Detekt> {

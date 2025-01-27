@@ -1,8 +1,16 @@
 package j_details
 
+import entities.collection.myListOf
+import entities.list.MyArrayList
+import entities.list.MyList
+
 open class Worker(val name: String)
 
-class Programmer(name: String) : Worker(name)
+class Programmer(name: String) : Worker(name) {
+    fun writeCode() {
+        println("Writing")
+    }
+}
 
 class Director(name: String) : Worker(name)
 
@@ -26,19 +34,18 @@ class Director(name: String) : Worker(name)
 
 data class Container<T>(var value: T? = null)
 
-fun main() {
-    val worker = Container<Worker>()
-    val programmer = Container(Programmer("b"))
-    val director = Container(Director("c"))
-    copy(programmer, worker)
-    copy(director, worker)
-    println(worker.value)
-    println(programmer.value)
-    println(director.value)
-
-
-}
-
+// fun main() {
+//    val worker = Container<Worker>()
+//    val programmer = Container(Programmer("b"))
+//    val director = Container(Director("c"))
+//    copy(programmer, worker)
+//    copy(director, worker)
+//    println(worker.value)
+//    println(programmer.value)
+//    println(director.value)
+//
+//
+// }
 
 // Контр вариантность - наличие совместимости у производных типов обратного направления(тип T и его родители).
 // Чтобы была контр вариантность, нужно указать ключевое слово in в производном типе
@@ -50,7 +57,6 @@ fun <T> copy(src: Container<T>, dst: Container<in T>) {
 // in - consumer, может только принимать данные
 // producer - extends, consumer - super
 
-
 // Обобщённые типы придуманы для программистов
 // В момент работы программы обобщённых типов не существует
 // После компиляции обобщённый тип приводится к типу Object(=Any) и в определённый местах программы
@@ -61,3 +67,27 @@ fun <T> copy(src: Container<T>, dst: Container<in T>) {
 // fun <T> container(container: Container<T>) {
 //     if (container is Container<Int>)
 // }
+
+fun main() {
+    val worker = Worker("")
+    val programmer = Programmer("b")
+    val director = Director("c")
+    val list = myListOf(worker, programmer, director)
+
+//    list.filter { it is Programmer }.map { it as Programmer }.forEach { it.writeCode() }
+    list
+        .myFilterIsInstance<Programmer>()
+        .forEach { it.writeCode() }
+}
+
+// "reified" позволяет не стирать тип во время компиляции, но такое возможно только в inline функции,
+// то есть функции, тело которой будет вставлено в код вместо её вызова.
+// * - это Star Projection. Означает любой тип. Позволяет упростить типизацию, если тип нигде
+// не используется в дальнейшем. * = out Any?
+inline fun <reified R> Iterable<*>.myFilterIsInstance(): MyList<R> {
+    val result = MyArrayList<R>()
+    for (element in this) {
+        if (element is R) result.add(element)
+    }
+    return result
+}
