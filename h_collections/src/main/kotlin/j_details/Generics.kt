@@ -1,6 +1,5 @@
 package j_details
 
-import entities.collection.myListOf
 import entities.list.MyArrayList
 import entities.list.MyList
 
@@ -90,57 +89,4 @@ inline fun <reified R> Iterable<*>.myFilterIsInstance(): MyList<R> {
         if (element is R) result.add(element)
     }
     return result
-}
-
-inline fun <T> Iterable<T>.myFilter(filter: (T) -> Boolean): MyList<T> {
-    val filtered = MyArrayList<T>()
-    for (item in this) {
-        if (filter(item)) filtered.add(item)
-    }
-    return filtered
-}
-
-fun <T> Iterable<T>.myFilter2(filter: Condition<T>): MyList<T> {
-    val filtered = MyArrayList<T>()
-    for (item in this) {
-        if (filter.isSuitable(item)) filtered.add(item)
-    }
-    return filtered
-}
-
-// myFilter и myFilter 2 выглядят в Байт коде выглядят идентично, если не указать ключевое слово inline.
-// То есть, анонимная функция трансформируется в объект анонимного класса функционального интерфейса
-// И в том и другом случае нельзя выйти из родительского метода через return
-// не inline функции каждый раз создаёт объект анонимного класса, что занимает память
-// внутри не inline функции нельзя вызывать suspend функции, даже если они внутри области корутин
-// внутри не inline функции нельзя узнать тип Обобщения
-// inline функции позволяют всё это делать
-// минус inline функции - в разрастании байт-кода, поэтому inline функциями должны быть короткими
-// делать функции inline стоит в 2 случаях: 1) если принимает другую функцию и короткая
-// 2) если нужно знать тип обобщённого типа во время выполнения
-
-fun interface Condition<T> {
-    fun isSuitable(item: T): Boolean
-}
-
-fun main() {
-    val worker = Worker("")
-    val programmer = Programmer("b")
-    val director = Director("c")
-    val list = myListOf(worker, programmer, director)
-
-    list
-        .myFilter {
-            return
-            it is Programmer
-        }
-        .map { it as Programmer }
-        .forEach { it.writeCode() }
-
-    list
-        .myFilter2 {
-            it is Programmer
-        }
-        .map { it as Programmer }
-        .forEach { it.writeCode() }
 }
