@@ -29,7 +29,6 @@ data class Zombie(val name: String) : Player {
     override fun fight() {
         println("I am eating human")
     }
-
 }
 
 data class Human(val name: String) : Player {
@@ -60,7 +59,6 @@ data class FlyingPlayer(val player: Player) : Player by player {
         println("I am flying")
     }
 }
-
 
 class LoggingMutableList<T>(private val list: MutableList<T>) : MutableList<T> by list {
     override fun add(element: T): Boolean {

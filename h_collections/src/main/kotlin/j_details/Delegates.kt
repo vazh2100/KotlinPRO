@@ -7,7 +7,6 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-
 fun main() {
     val user = Person()
     user.password = "1234567"
@@ -20,13 +19,11 @@ fun main() {
     user.a = "1001"
 }
 
-
 class Person {
 
     var a: String by myObservable("0") { old, new ->
         println("$old -> $new")
     }
-
 
     var password: String = ""
         set(value) {
@@ -43,12 +40,9 @@ class Person {
         }
 
     var creditCard: String by EncryptedProperty()
-
 }
 
-
 class EncryptedProperty : ReadWriteProperty<Any, String> {
-
 
     private var encryptedValue: String = ""
 
@@ -82,5 +76,4 @@ class ObservableProperty<T>(initialValue: T, val onChange: (oldValue: T, newValu
     override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
         currentValue = value.also { onChange(currentValue, value) }
     }
-
 }
