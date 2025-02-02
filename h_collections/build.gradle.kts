@@ -18,6 +18,7 @@ dependencies {
     "detektPlugins"("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0")
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
+    implementation(project("encrypted"))
 }
 
 tasks.test {
