@@ -2,16 +2,18 @@ package b_coroutines
 
 import entities.Author
 import entities.Book
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.awt.BorderLayout
 import java.awt.Dimension
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import javax.swing.*
 import kotlin.concurrent.thread
 
 // По сути механизм coroutines - это callbacks
 object Display {
+
+    private val scope = CoroutineScope(CoroutineName("MyName"))
 
     private val infoArea = JTextArea().apply {
         isEditable = false
@@ -19,14 +21,16 @@ object Display {
 
     private val loadButton = JButton("Load book info").apply {
         addActionListener {
-            // создаём Coroutine
-            GlobalScope.launch {
+            // Создаём Coroutine. "launch" - это один из строителей корутин.
+            scope.launch {
                 isEnabled = false
                 infoArea.text = "Loading book information...\n"
                 val book = loadBook()
+                println(book)
                 infoArea.append(book.toString())
                 infoArea.append("Loading author information...\n")
                 val author = loadAuthor(book)
+                println(author)
                 infoArea.append(author.toString())
                 isEnabled = true
             }
@@ -45,6 +49,11 @@ object Display {
         add(topPanel, BorderLayout.NORTH)
         add(JScrollPane(infoArea), BorderLayout.CENTER)
         size = Dimension(400, 300)
+        addWindowListener(object : WindowAdapter() {
+            override fun windowClosing(p0: WindowEvent?) {
+                scope.cancel()
+            }
+        })
     }
 
     fun show() {
@@ -81,3 +90,8 @@ object Display {
 fun main() {
     Display.show()
 }
+
+// Structured Concurrency - Структурированный параллелизм
+// 1) Корутины должны быть запущены внутри области с определенным жизненным циклом.
+// Это означает, что если нам больше не нужна область(вернулись на предыдущий экран, например), вся корутины области
+// должны быть отменены.
