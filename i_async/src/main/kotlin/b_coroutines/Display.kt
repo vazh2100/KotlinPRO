@@ -7,13 +7,16 @@ import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
+import java.util.concurrent.Executors
 import javax.swing.*
 import kotlin.concurrent.thread
 
 // По сути механизм coroutines - это callbacks
 object Display {
 
-    private val scope = CoroutineScope(CoroutineName("MyName") + Dispatchers.Unconfined)
+    // Создание CoroutineDispatcher из ExecutorService
+    private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private val scope = CoroutineScope(CoroutineName("MyName") + dispatcher)
     private val infoArea = JTextArea().apply {
         isEditable = false
     }
@@ -61,20 +64,21 @@ object Display {
         startTimer()
     }
 
-    private suspend fun longOperation() = withContext(Dispatchers.Default) {
+    private suspend fun heavyOperation() = withContext(Dispatchers.Default) {
         val a = mutableListOf<Int>()
         repeat(300_000) {
             a.add(0, it)
         }
     }
 
+
     private suspend fun loadBook(): Book {
-        longOperation()
+        heavyOperation()
         return Book("1984", 1949, "Dystopia")
     }
 
     private suspend fun loadAuthor(book: Book): Author {
-        longOperation()
+        heavyOperation()
         return Author("George Orwell", "British writer and journalist")
     }
 
@@ -102,7 +106,10 @@ fun main() {
 // Это означает, что если нам больше не нужна область(вернулись на предыдущий экран, например), вся корутины области
 // должны быть отменены.
 //
+// Coroutine context - это составное понятие. В него входят Имя, Dispatcher.
 // Dispatcher-Default использует пул потоков фиксированной длины равный количеству физических ядер процессора
 // Dispatcher-Unconfined запускает корутины в том потоке на котором её создали, но после приостановки дальнейшее выполнение
 // зависит от приостанавливающей функции
-// Coroutine context - это составное понятие. В него входят Имя, Dispatcher.
+// Dispatcher-IO использует Cached Thread Pool. Используется не для сложных  операций, а для работы с сетью,
+// чтением из файлов, запись в файл, чтение и запись в базу данных. Работы процессора нет, но ждать нужно.
+// Dispatchers Main использует SingleThreadExecutor
