@@ -1,43 +1,42 @@
-package b_coroutines
+package e_concurrency
 
-import entities.Author
 import entities.Book
 import kotlinx.coroutines.*
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
+import java.util.*
 import java.util.concurrent.Executors
 import javax.swing.*
-import kotlin.concurrent.thread
 
+@Suppress("MagicNumber")
 // По сути механизм coroutines - это callbacks
 object Display {
 
     // Создание CoroutineDispatcher из ExecutorService
     private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-    private val scope = CoroutineScope(CoroutineName("MyName") + dispatcher)
+    private val timerDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private val scope = CoroutineScope(dispatcher)
+    private val timerScope = CoroutineScope(timerDispatcher)
     private val infoArea = JTextArea().apply {
         isEditable = false
     }
     private val loadButton = JButton("Load book info").apply {
         addActionListener {
             // Создаём Coroutine. "launch" - это один из строителей корутин.
+            isEnabled = false
+            infoArea.append("Loading book information...\n")
+            val jobs = mutableListOf<Job>()
+            repeat(10) {
+                val job = scope.launch {
+                    val book = loadBook()
+                    infoArea.append(book.toString())
+                }
+                jobs.add(job)
+            }
             scope.launch {
-                println("Started in thread: ${Thread.currentThread().name}")
-                delay(100)
-                println("Resumed in thread: ${Thread.currentThread().name}")
-                isEnabled = false
-                infoArea.text = "Loading book information...\n"
-                val book = loadBook()
-                println("Resumed in thread: ${Thread.currentThread().name}")
-                println(book)
-                infoArea.append(book.toString())
-                infoArea.append("Loading author information...\n")
-                val author = loadAuthor(book)
-                println("Resumed in thread: ${Thread.currentThread().name}")
-                println(author)
-                infoArea.append(author.toString())
+                jobs.joinAll()
                 isEnabled = true
             }
         }
@@ -55,6 +54,7 @@ object Display {
         addWindowListener(object : WindowAdapter() {
             override fun windowClosing(p0: WindowEvent?) {
                 scope.cancel()
+                timerScope.cancel()
             }
         })
     }
@@ -71,26 +71,20 @@ object Display {
         }
     }
 
-
     private suspend fun loadBook(): Book {
         heavyOperation()
         return Book("1984", 1949, "Dystopia")
     }
 
-    private suspend fun loadAuthor(book: Book): Author {
-        heavyOperation()
-        return Author("George Orwell", "British writer and journalist")
-    }
-
     private fun startTimer() {
-        thread {
+        timerScope.launch {
             var totalSeconds = 0
             while (true) {
                 val minutes = totalSeconds / 60
                 val seconds = totalSeconds % 60
                 timerLabel.text = "Time: $minutes:$seconds"
-                timerLabel.text = String.format("Time: %02d:%02d", minutes, seconds)
-                Thread.sleep(1000)
+                timerLabel.text = String.format(Locale.ENGLISH, "Time: %02d:%02d", minutes, seconds)
+                delay(1000)
                 totalSeconds++
             }
         }
