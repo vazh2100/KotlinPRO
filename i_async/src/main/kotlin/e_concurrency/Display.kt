@@ -27,16 +27,17 @@ object Display {
             // Создаём Coroutine. "launch" - это один из строителей корутин.
             isEnabled = false
             infoArea.append("Loading book information...\n")
-            val jobs = mutableListOf<Job>()
+            val jobs = mutableListOf<Deferred<Book>>()
             repeat(10) {
-                val job = scope.launch {
+                val job = scope.async {
                     val book = loadBook()
                     infoArea.append(book.toString())
+                    book
                 }
                 jobs.add(job)
             }
             scope.launch {
-                jobs.joinAll()
+                println(jobs.awaitAll())
                 isEnabled = true
             }
         }
@@ -106,3 +107,5 @@ fun main() {
 // Dispatcher-IO использует Cached Thread Pool. Используется не для сложных  операций, а для работы с сетью,
 // чтением из файлов, запись в файл, чтение и запись в базу данных. Работы процессора нет, но ждать нужно.
 // Dispatchers Main использует SingleThreadExecutor
+// Если мы не ждём от корутины результат, то используется launch. А если нужен результат, то используется
+// async. async возвращает Deferred - наследник Job.
