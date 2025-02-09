@@ -20,6 +20,10 @@ fun main() {
         } catch (e: Exception) {
             println("yes")
         }
+        // handler игнорируется в дочерних корутинах
+        launch(handler) {
+            method()
+        }
     }
     Thread.sleep(5000)
     scope.launch {
@@ -35,3 +39,4 @@ suspend fun method(): String {
 // Чтобы обработать исключение в корневой Job, нужно добавить CoroutineExceptionHandler.
 // Но это не оживляет scope. корневой Job отменяет все дочерние Coroutine
 // CoroutineExceptionHandler - это ещё одна составляющая корутин context
+// Передача exceptionHandler в дочернюю корутину игнорируется
