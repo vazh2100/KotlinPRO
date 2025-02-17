@@ -1,10 +1,10 @@
 package c_dictionary
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import java.net.HttpURLConnection
 import java.net.URI
-import java.util.concurrent.Executors
 
 internal object Repository {
 
@@ -21,18 +21,12 @@ internal object Repository {
         connection.addRequestProperty(HEADER, API_KEY)
         // байты -> символы -> текст
         val response = connection.inputStream.bufferedReader().readText()
-        json.decodeFromString<Definition>(response).definition.also {
+        json.decodeFromString<Definition>(response).replace().also {
             connection.disconnect()
         }
     }
-}
 
-private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-private val scope = CoroutineScope(dispatcher)
-
-fun main() {
-    scope.launch {
-        Repository.loadDefinition("mother").let(::println)
+    private fun Definition.replace(): String {
+        return this.definition.plus("10. Andrey").replace(Regex(""" (\d+\. )"""), "\n\n$1").trim()
     }
 }
-
