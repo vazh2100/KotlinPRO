@@ -1,22 +1,35 @@
 package c_dictionary
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import java.awt.BorderLayout
+import java.awt.event.KeyAdapter
+import java.awt.event.KeyEvent
 import java.util.concurrent.Executors
 import javax.swing.*
 
 object Display {
 
     //
-    private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-    private val scope = CoroutineScope(dispatcher + SupervisorJob())
-
-    //
     private val repository = Repository
 
-    //
+    // scope
+    private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    private val scope = CoroutineScope(dispatcher + SupervisorJob())
+    private var loadingJob: Job? = null
+
+    // state
+    private lateinit var queries: Flow<String>
+
+    // ui
     private val textFieldLabel = JLabel("Enter word")
-    private val textField = JTextField(20)
+    private val textField = JTextField(20).apply {
+        addKeyListener(object : KeyAdapter() {
+            override fun keyReleased(e: KeyEvent?) {
+                onTextChanged()
+            }
+        })
+    }
     private val searchButton: JButton = JButton("Search").apply {
         this.addActionListener { onButtonPressed() }
     }
@@ -37,14 +50,32 @@ object Display {
         pack()
     }
 
+    init {
+        queries.onEach {
+            searchButton.isEnabled = false
+            resultArea.text = "Loading..."
+        }.map {
+            repository.loadDefinition(it)
+        }.catch {
+            resultArea.text = "Not Found"
+        }.onEach {
+            resultArea.text = it.ifEmpty { "Not Found" }
+        }.launchIn(scope)
+    }
+
     //
     fun show() {
         mainFrame.isVisible = true
     }
 
-    private fun onButtonPressed() = scope.launch {
+    private fun onButtonPressed() = useCase()
+
+    private fun onTextChanged(): Job = useCase()
+
+    private fun useCase() = scope.launch {
         searchButton.isEnabled = false
         resultArea.text = "Loading..."
+        delay(500)
         runCatching {
             repository.loadDefinition(textField.text.trim())
         }.onSuccess {
@@ -54,6 +85,9 @@ object Display {
             resultArea.text = "Not Found"
         }
         searchButton.isEnabled = true
+    }.also {
+        loadingJob?.cancel()
+        loadingJob = it
     }
 
 }
