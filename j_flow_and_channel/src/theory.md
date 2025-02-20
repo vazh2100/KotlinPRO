@@ -44,7 +44,7 @@ flow<String> {
 ```
 
 # Холодные поток
-flow{}, Flow
+`flow{}`, `Flow`
 1) Холодный поток не начнёт выпускать данные, пока на него не подпишутся.
 2) Если данные больше не нужны, холодный поток завершает свою работу
 3) Если холодный поток закончил выпускать значения, то его коллекторы завершают работу.
@@ -52,7 +52,7 @@ flow{}, Flow
    flow начинает работать сначала.
 5) emit можно вызвать только внутри flow {}
 # Горячий поток
-MutableSharedFlow(), SharedFlow,
+`MutableSharedFlow()`, `SharedFlow`,
 1) Горячий поток выпускает данные независимо от наличия подписчиков.
 2) Если данные больше не нужны, горячий поток не завершает работу.
 3) Коллекторы горячего потока завершают работу, только если им больше не нужны данные (take())
@@ -60,4 +60,21 @@ MutableSharedFlow(), SharedFlow,
 5) emit можно вызвать снаружи
 6) Горячий поток никогда не завершает работу
 
+# ShareIn
+```kotlin
+private val timerFlow = generateSequence(0) { it + 1 }.asFlow().onEach { delay(1000) }
+private val timerShared = timerFlow.shareIn(scope, SharingStarted.Eagerly)
+//private val timerShared = MutableSharedFlow<Int>().apply {
+//    scope.launch {
+//        timerFlow.collect {
+//            emit(it)
+//        }
+//    }
+//}.asSharedFlow()
+```
+`SharingStarted.Eagerly` - поток начинает выпускать значения сразу после создания.
+`SharingStarted.Lazily` - поток начинает выпускать значения только после первой подписки.
+`SharingStarted.WhileSubscribed()` - поток начинает выпускать значения после первой подписки, до тех пор
+пока есть подписчики. Когда подписчиков нет, подписка на холодный поток внутри shareIn отменяется. А при новых
+подписчиках холодный поток стартует заново. 
 
