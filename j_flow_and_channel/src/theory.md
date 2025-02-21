@@ -37,9 +37,9 @@ catch() не спасает поток, если ошибка произошла
 ```kotlin
 // consumeAsFlow:
 flow<String> {
-   queries.consumeEach {
-      emit(it)
-   }
+    queries.consumeEach {
+        emit(it)
+    }
 }
 ```
 
@@ -91,3 +91,14 @@ BackPressure - ситуация, когда Producer выпускает данн
 
 Интересно, что будет, если это будет с sharedFlow
 
+# Shared Flow
+по умолчанию не хранит в себе последнее значение, если подписчик не успел вовремя подписаться, он его не получит.
+`replay` - количество элементов, которые нужно хранить Shared Flow для того, чтобы отдавать подписчикам в момент
+подписки. По умолчанию 0.
+`extraBufferCapacity` - размер буфера дополнительно к размеру `replay`. По умолчанию 0.
+`onBufferOverFlow` - по умолчанию `SUSPEND`
+
+# State Flow
+- это `SharedFlow`, с параметрами `replay` = 1, `extraBufferCapacity` = 0, `onBufferOverFlow` = DROP_OLDEST, а также с
+  `distinctUntilChanged()`. Все эти параметры нельзя изменить.
+- при создании принимает начальное значение
