@@ -27,6 +27,6 @@ internal object Repository {
     }
 
     private fun Definition.replace(): String {
-        return this.definition.plus("10. Andrey").replace(Regex(""" (\d+\. )"""), "\n\n$1").trim()
+        return this.definition.replace(Regex(""" (\d+\. )"""), "\n\n$1").trim()
     }
 }
