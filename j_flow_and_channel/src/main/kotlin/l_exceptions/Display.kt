@@ -1,6 +1,6 @@
-package i_screen_state_as_flow
+package l_exceptions
 
-import c_dictionary.Repository
+import i_screen_state_as_flow.ScreenState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -21,7 +21,7 @@ object Display {
 
     // state
     private val queries: Channel<String> = Channel()
-    private val state = MutableSharedFlow<ScreenState>()
+    private val state = MutableStateFlow<ScreenState>(ScreenState.Initial)
 
     // ui
     private val textFieldLabel = JLabel("Enter word")
@@ -54,9 +54,6 @@ object Display {
 
     init {
         @Suppress("OPT_IN_USAGE") queries.consumeAsFlow()
-            .onStart {
-                state.emit(ScreenState.Initial)
-            }
             .onEach {
                 state.emit(ScreenState.Loading)
             }.debounce(
@@ -73,12 +70,12 @@ object Display {
                             state.emit(ScreenState.Loaded(content))
                         }
                     } catch (_: Throwable) {
-                        state.emit(ScreenState.NotFound)
+                        state.emit(ScreenState.Error)
                     }
                 }
             }.launchIn(scope)
 
-        state.distinctUntilChanged().onEach {
+        state.onEach {
             println(it)
             when (it) {
                 ScreenState.Initial -> {
@@ -97,7 +94,10 @@ object Display {
                     resultArea.text = it.content
                     searchButton.isEnabled = true
                 }
-                ScreenState.Error -> {}
+                ScreenState.Error -> {
+                    resultArea.text = "Something went wrong"
+                    searchButton.isEnabled = true
+                }
             }
         }.launchIn(scope)
     }

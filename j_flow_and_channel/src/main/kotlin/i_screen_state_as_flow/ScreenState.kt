@@ -4,5 +4,6 @@ sealed class ScreenState {
     data object Initial : ScreenState()
     data object Loading : ScreenState()
     data object NotFound : ScreenState()
+    data object Error : ScreenState()
     data class Loaded(val content: String) : ScreenState()
 }

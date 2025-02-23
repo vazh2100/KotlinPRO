@@ -95,6 +95,7 @@ object Display {
                     resultArea.text = it.content
                     searchButton.isEnabled = true
                 }
+                ScreenState.Error -> {}
             }
         }.launchIn(scope)
     }
