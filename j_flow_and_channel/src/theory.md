@@ -107,3 +107,7 @@ State Flow - это `SharedFlow`, с параметрами `replay` = 1, `extra
 Ошибка пойманная через catch не обрушивает scope, он остаётся работоспособным.
 
 suspend `emit` -> suspend  `collect` -> stop suspend `emit`
+
+# Flow On
+Все emit, промежуточные операторы будут выполняться на том dispatcher, на котором была произведена подписка.
+`flowOn()` - влияет только на часть потока выше оператора на upstream
