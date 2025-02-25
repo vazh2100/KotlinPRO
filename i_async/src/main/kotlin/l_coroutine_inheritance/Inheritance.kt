@@ -1,4 +1,4 @@
-package n_coroutine_inheritance
+package l_coroutine_inheritance
 
 import kotlinx.coroutines.*
 import java.util.concurrent.Executors

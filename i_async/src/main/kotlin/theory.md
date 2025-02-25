@@ -113,3 +113,12 @@ private suspend fun loadBook(): Book = suspendCoroutine { continuation ->
     loadBook { continuation.resumeWith(Result.success(it)) }
 }
 ```
+
+# Mutex
+В блоке synchronized нельзя использовать suspend функции
+
+|                      | synchronized(LOCK){}   | mutex.withLock {}         |
+|----------------------|------------------------|---------------------------|
+| поток                | блокирует поток        | приостанавливает корутину |
+| suspend внутри блока | -                      | +                         |
+| снятие замка         | поток, закрывший замок | корутина, закрывшая замок |

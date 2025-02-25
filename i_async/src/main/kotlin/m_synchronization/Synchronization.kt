@@ -1,4 +1,4 @@
-package o_synchronization
+package m_synchronization
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
