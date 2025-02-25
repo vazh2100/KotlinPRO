@@ -1,4 +1,4 @@
-package c_basis
+package h_collections
 
 fun main() {
 //    val names = listOf<String>("Vasya", "Petya", "Mark", "Lost")

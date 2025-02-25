@@ -1,4 +1,4 @@
-package c_basis
+package i_repeat_while
 
 fun main() {
 //    var acON = false

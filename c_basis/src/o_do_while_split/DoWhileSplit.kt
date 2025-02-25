@@ -1,4 +1,4 @@
-package c_basis
+package o_do_while_split
 
 fun main() {
 //    var count = readln().toInt()

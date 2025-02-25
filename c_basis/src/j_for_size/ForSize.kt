@@ -1,4 +1,4 @@
-package c_basis
+package j_for_size
 
 fun main() {
 //    val names = listOf("Andrey", "Vasya", "Petya", "Lost", "Emma")

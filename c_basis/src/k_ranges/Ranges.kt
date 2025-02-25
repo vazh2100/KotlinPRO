@@ -1,4 +1,4 @@
-package c_basis
+package k_ranges
 
 fun main() {
 //    val numbers = 0..1000

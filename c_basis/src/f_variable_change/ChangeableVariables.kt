@@ -1,4 +1,4 @@
-package c_basis
+package f_variable_change
 
 fun main() {
     var temp = readln().toInt()

@@ -1,9 +1,6 @@
-package c_basis
+package b_string_patterns
 
-fun main(args: Array<String>) {
-
-    dz();
-    return
+fun main() {
     print("Input your name: ")
     val name = readln()
     print("Input your age: ")
@@ -15,6 +12,8 @@ fun main(args: Array<String>) {
     print("Input your weight: ")
     val weight = readln()
     println("name: \"$name\" \nage: \"$age\" \nsex: \"$sex\" \nheight: \"$height\" \nweight: \"$weight\"")
+
+    dz()
 }
 
 fun dz() {

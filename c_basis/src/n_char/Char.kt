@@ -1,4 +1,4 @@
-package c_basis
+package n_char
 
 fun main() {
 //    val eng = 'a'..'z'

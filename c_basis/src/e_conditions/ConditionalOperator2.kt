@@ -1,4 +1,4 @@
-package c_basis
+package e_conditions
 
 fun main() {
 //    val temp = readln().toInt()
@@ -11,8 +11,6 @@ fun main() {
 //    } else {
 //        println("The AC is idle")
 //    }
-
-
 //    val time = readln().toInt() //0-24
 //    val weather = readln().toBoolean()
 //    val day = time in 7..19
@@ -24,8 +22,6 @@ fun main() {
 //    } else {
 //        println("Sleep")
 //    }
-
-
     val money = readln().toInt() //0-24
     val isHungry = readln().toBoolean()
     if (money >= 500 && isHungry) {

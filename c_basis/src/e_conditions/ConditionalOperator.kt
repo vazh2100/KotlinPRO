@@ -1,4 +1,4 @@
-package c_basis
+package e_conditions
 
 fun main() {
 //    val temp = readln().toInt()

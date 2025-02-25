@@ -1,4 +1,4 @@
-package c_basis
+package m_if_when
 
 fun main() {
 //    print("Введи месяц: ")

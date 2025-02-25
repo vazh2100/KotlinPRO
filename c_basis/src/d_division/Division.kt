@@ -1,10 +1,11 @@
-package c_basis
+package d_division
 
 fun main() {
-    /*   val a = 10
-       val b = 3
-       val division = (a / b).toDouble()
-       println(division)*/
+    val a = 10
+    val b = 3
+    val division = (a / b).toDouble()
+    println(division)
+
     print("Введите количество секунд:")
     val seconds = readln().toInt()
     val hours = seconds / 3600

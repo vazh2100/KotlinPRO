@@ -1,6 +1,6 @@
-package c_basis
+package a_variables
 
-fun main(args: Array<String>) {
+fun main() {
     println("Input your name:")
     val name = readln()
     println("Input your age:")
@@ -16,8 +16,6 @@ fun main(args: Array<String>) {
     println("sex: $sex")
     println("height: $height")
     println("weight: $weight")
-
-
 //    val x = 5
 //    val y = x + 7
 //    val sum = x + y
