@@ -1,4 +1,0 @@
-name=sya;age=40;workerType=DIRECTOR;salary=50000
-name=Arina;age=24;workerType=ASSISTANT;salary=20000
-name=Miha;age=60;workerType=CONSULTANT;salary=100000
-name=Sanya;age=40;workerType=ACCOUNTANT;salary=100000
